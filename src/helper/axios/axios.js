@@ -8,7 +8,6 @@ export const axiosProcesserAPI = async ({ method, url, ...rest }) => {
         const { data } = await axios({
             method, url, ...rest,
         })
-        console.log(data)
         return data
 
     } catch (error) {

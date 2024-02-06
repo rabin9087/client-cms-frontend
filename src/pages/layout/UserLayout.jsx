@@ -6,9 +6,6 @@ const UserLayout = ({ children, title }) => {
   return (
     <div className="min-h-screen">
       <div className="flex">
-        {/* <div className="">
-          <Sidebar />
-        </div> */}
         <div className="w-full">
           <div>
             <Header />
