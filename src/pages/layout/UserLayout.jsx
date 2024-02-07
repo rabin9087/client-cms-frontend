@@ -1,28 +1,17 @@
 import Header from "./Header";
 import Footer from "./Footer";
-import Sidebar from "./Sidebar";
 
-const UserLayout = ({ children, title }) => {
+const UserLayout = ({ children, title, products, setProducts }) => {
+  
   return (
     <div className="min-h-screen">
-      <div className="flex">
-        <div className="w-full">
-          <div>
-            <Header />
-          </div>
-          <div>
-            <main>
-              <div>
-                <h1>{title}</h1>
-                {children}
-              </div>
-            </main>
-          </div>
-          <div className="fixed poition-botton block ">
-            <Footer />
-          </div>
-        </div>
-      </div>
+      
+      <Header products= {products} setProducts={setProducts}/>
+      <main className="min-h-[73vh]">
+        <h1>{title}</h1>
+        <div>{children}</div>
+      </main>
+      <Footer />
     </div>
   );
 };

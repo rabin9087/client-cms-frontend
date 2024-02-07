@@ -15,12 +15,11 @@ function App() {
   }, [dispatch]);
 
   return (
-    <>
-      <div className="flex justify-center"></div>
+    <div className="app">
       <Routes>
         <Route path="/" element={<Home />} />
       </Routes>
-    </>
+    </div>
   );
 }
 

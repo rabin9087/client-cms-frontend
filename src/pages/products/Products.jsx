@@ -1,85 +1,42 @@
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 
-const Products = () => {
-  const { productList } = useSelector((state) => state.productInfo);
-  const [products, setProducts] = useState([]);
-  const [currentPage, setPage] = useState(1);
-  useEffect(() => {
-    setProducts(productList.slice(0, 1));
-  }, [productList]);
-
-  useEffect(() => {
-    let newArray;
-
-    // if (currentPage === 5) {
-    //   newArray = productList.slice(productList.length - 1);
-    // } else {
-    newArray = productList.slice(currentPage - 1, currentPage);
-    // }
-    setProducts(newArray);
-  }, [productList, currentPage]);
-  const numberOfProducts = Array(5).fill("1");
+const Products = ({ products }) => {
   return (
-    <div className="bg-white">
-      <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8 flex flex-col gap-5">
-        <h2 className="text-2xl font-bold tracking-tight text-gray-900">
-          Customers also purchased
-        </h2>
-
-        <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-          {products.map(
-            ({
-              _id,
-              description,
-              images,
-              name,
-              price,
-              slug,
-              thumbnail,
-              sku,
-            }) => (
+    <div className="bg-white border-2 border-red-500">
+      <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8 flex flex-col justify-start gap-5">
+        <div>
+          <h2 className="text-2xl font-bold tracking-tight text-gray-900">
+            Latest Products
+          </h2>
+          {products?.length < 1 && (
+            <div className="mt-6 flex justify-center items-center shadow-lg py-10 bg-red-300 rounded-2xl">
+              <h1 className="text-lg font-bold"> No Products found</h1>
+            </div>
+          )}
+          <div className="mt-6 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-4 xl:gap-x-8">
+            {products.map(({ _id, name, price, thumbnail }) => (
               <div key={_id} className="group relative">
-                <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-900 lg:aspect-none group-hover:opacity-75 lg:h-80">
+                <div className="aspect-h-1 aspect-w-1 w-full h-56 overflow-hidden rounded-md lg:aspect-none group-hover:opacity-75 lg:h-80 shadow-lg">
                   <img
+                    href=""
                     src={thumbnail}
                     alt={name}
-                    className="h-full w-full object-cover  object-center lg:h-full lg:w-full"
+                    className="p-2 object-center w-full h-full lg:h-full lg:w-full border-2"
                   />
                 </div>
-                <div className="mt-4 flex justify-between">
+                <div className="mt-4 justify-between">
                   <div>
-                    <h3 className="text-sm text-gray-700">
+                    <h3 className="text-lg text-gray-700">
                       <a href={"/"}>
                         <span aria-hidden="true" className="absolute inset-0" />
                         {name}
                       </a>
                     </h3>
                   </div>
-                  <p className="text-sm font-medium text-gray-900">{price}</p>
+                  <p className="text-lg font-bold text-gray-900">$ {price}</p>
                 </div>
               </div>
-            )
-          )}
-        </div>
-        <div className="flex justify-center">
-          <ul className="flex gap-3">
-            <li className="border p-3 rounded-lg">Prev</li>
-            {numberOfProducts.map((value, index) => {
-              return (
-                <li
-                  key={index}
-                  className="border p-3 rounded-lg"
-                  onClick={() => {
-                    setPage(index + 1);
-                  }}
-                >
-                  {index + 1}
-                </li>
-              );
-            })}
-            <li className="border p-3 rounded-lg">Next</li>
-          </ul>
+            ))}
+          </div>
         </div>
       </div>
     </div>
