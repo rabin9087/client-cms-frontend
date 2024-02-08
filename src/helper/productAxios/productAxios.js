@@ -1,10 +1,10 @@
 import { axiosAPI, axiosProcesserAPI } from "../axios/axios";
 
-const productAPI = axiosAPI + "/products"
+export const productAPI = axiosAPI + "/products"
 
-export const fetchProducts = (_id) => {
+export const fetchProducts = (slug) => {
     return axiosProcesserAPI({
         method: 'get',
-        url: _id ? productAPI + "/" + _id : productAPI,
+        url: slug ? productAPI + "/" + slug : productAPI,
     })
 }
