@@ -9,6 +9,7 @@ phases:
   pre_build:
     commands:
       - npm install
+      # or -npm ci
   build:
     commands:
       - npm run build
@@ -16,4 +17,8 @@ artifacts:
   files:
     - "**/*"
   discard-path: no
-  base-directory: build
+  base-directory: dist
+
+  cache:
+    paths:
+      -node_modules/**/*
