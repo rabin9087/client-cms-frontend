@@ -17,8 +17,8 @@ const Products = ({ products }) => {
             {products.map(({ _id, name, price, thumbnail, slug }) => (
               <div key={_id} className="group relative">
                 <div className="aspect-h-1 aspect-w-1 w-full h-56 overflow-hidden rounded-md lg:aspect-none group-hover:opacity-75 lg:h-80 shadow-lg">
-                  {/* <Link to={`/product/${slug}`}> */}
-                  <Link to={`#`}>
+                  <Link to={`/product/${slug}`}>
+                    {/* <Link to={`#`}> */}
                     <img
                       src={thumbnail}
                       alt={name}
