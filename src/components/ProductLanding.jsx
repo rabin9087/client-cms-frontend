@@ -9,9 +9,16 @@ import { SetAOrder, setOrderList } from "../pages/order/order";
 const ProductLanding = () => {
   const { slug } = useParams();
   const dispatch = useDispatch();
+
+  const { order } = useSelector((state) => state.orderInfo);
+  const { orderList } = useSelector((state) => state.orderInfo);
   const { product } = useSelector((state) => state.productInfo);
 
   const [count, setCount] = useState(1);
+  const [newOrder, setNewOrder] = useState(order);
+  const [newOrderList, setNewOrderList] = useState(orderList);
+
+  const [newThumbnail, setNewThumbnail] = useState(product?.thumbnail);
 
   const decrement = () => {
     if (count > 1) {
@@ -26,8 +33,8 @@ const ProductLanding = () => {
   };
 
   const orderItem = () => {
-    dispatch(SetAOrder(product));
-    dispatch(setOrderList([product]));
+    // setNewOrder(dispatch(SetAOrder(product)));
+    setNewOrderList([...orderList, dispatch(setOrderList(product))]);
   };
 
   useEffect(() => {
@@ -40,14 +47,17 @@ const ProductLanding = () => {
         <div className="hidden md:block items-center justify-center md:w-1/5 md:h-1/5 lg:w-1/6 lg:h-1/4 xl:w-1/12 xl:h-1/4">
           {product.images?.map((item, i) => (
             <div key={i} className="flex items-center justify-center my-auto">
-              <div className="h-2/3 w- 2/3 shadow-lg">
-                <Link>
-                  <img
-                    src={item}
-                    alt={product.name}
-                    className="p-2 object-center"
-                  />
-                </Link>
+              <div
+                className="h-2/3 w- 2/3 shadow-lg hover:opacity-75 "
+                
+              >
+
+                {console.log(newOrderList)}
+                <img
+                  src={item}
+                  alt={product.name}
+                  className="p-2 object-center"
+                />
               </div>
             </div>
           ))}
@@ -55,9 +65,9 @@ const ProductLanding = () => {
         <div className="block w-full shadow-lg pb-8">
           <div className="block sm:flex h-5/6">
             <div className="mt-6 grid grid-cols-1 justify-center gap-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-2 xl:gap-8">
-              <div className="aspect-h-1 aspect-w-1 w-full">
+              <div className="aspect-h-1 aspect-w-1 w-full ">
                 <img
-                  src={product.thumbnail}
+                  src={newThumbnail}
                   alt={product.slug}
                   className="p-2 object-center w-full h-full lg:h-full lg:w-full "
                 />
@@ -137,7 +147,7 @@ const ProductLanding = () => {
               key={i}
               className="flex items-center justify-around group relative "
             >
-              <div className="shadow-lg">
+              <div className="shadow-lg hover:opacity-75">
                 <img
                   src={item}
                   alt={product.name}

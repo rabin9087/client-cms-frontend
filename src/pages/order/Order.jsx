@@ -9,7 +9,7 @@ const orderSlice = createSlice({
   name: "order",
   initialState,
   reducers: {
-    setOrderList: (state, { payload }) => {
+    setOrderList: (state, { payload = []}) => {
       state.orderList = payload;
     },
     SetAOrder: (state, { payload }) => {
