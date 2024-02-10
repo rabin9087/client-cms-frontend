@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { fetchAProduct } from "../pages/products/productAction";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import UserLayout from "../pages/layout/UserLayout";
 import Rating from "./Rating";
-import { SetAOrder, setOrderList } from "../pages/order/order";
 
 const ProductLanding = () => {
   const { slug } = useParams();
