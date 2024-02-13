@@ -4,21 +4,19 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import UserLayout from "../pages/layout/UserLayout";
 import Rating from "./Rating";
+import { setAddToCartList } from "../pages/addToCart/addToCartSlice";
 
 const ProductLanding = () => {
   const { slug } = useParams();
   const dispatch = useDispatch();
 
-  const { order } = useSelector((state) => state.orderInfo);
-  const { orderList } = useSelector((state) => state.orderInfo);
+  const { addToCartList } = useSelector((state) => state.addToCartInfo);
+
   const { product } = useSelector((state) => state.productInfo);
+  const [carts, setCats] = useState(addToCartList);
+  const [addProduct, setAddProduct] = useState({});
 
   const [count, setCount] = useState(1);
-  const [newOrder, setNewOrder] = useState(order);
-  const [newOrderList, setNewOrderList] = useState(orderList);
-
-  const [newThumbnail, setNewThumbnail] = useState(product?.thumbnail);
-
   const decrement = () => {
     if (count > 1) {
       setCount((prev) => prev - 1);
@@ -26,14 +24,19 @@ const ProductLanding = () => {
   };
 
   const increment = () => {
-    if (count < 20) {
+    if (count < product?.qty) {
       setCount((prev) => prev + 1);
     }
   };
 
-  const orderItem = () => {
-    // setNewOrder(dispatch(SetAOrder(product)));
-    setNewOrderList([...orderList, dispatch(setOrderList(product))]);
+  const itemAddToCart = () => {
+    setAddProduct(product);
+    console.log(addProduct);
+    if (count > 0 && count < product?.qty) {
+      setAddProduct((prevAddProduct) => ({ ...prevAddProduct, qty: count }));
+      setCats((prevCarts) => [...prevCarts, addProduct]);
+      dispatch(setAddToCartList(carts));
+    }
   };
 
   useEffect(() => {
@@ -46,29 +49,24 @@ const ProductLanding = () => {
         <div className="hidden md:block items-center justify-center md:w-1/5 md:h-1/5 lg:w-1/6 lg:h-1/4 xl:w-1/12 xl:h-1/4">
           {product.images?.map((item, i) => (
             <div key={i} className="flex items-center justify-center my-auto">
-              <div
-                className="h-2/3 w- 2/3 shadow-lg hover:opacity-75 "
-                
-              >
-
-                {console.log(newOrderList)}
+              <div className="h-2/3 w- 2/3 shadow-lg hover:opacity-75 ">
                 <img
-                  src={item}
+                  src={import.meta.env.VITE_SERVER_ROOT + item}
                   alt={product.name}
-                  className="p-2 object-center"
+                  className="p-2 productLangingImg object-center"
                 />
               </div>
             </div>
           ))}
         </div>
-        <div className="block w-full shadow-lg pb-8">
+        <div className="block w-full  shadow-lg pb-8 ">
           <div className="block sm:flex h-5/6">
-            <div className="mt-6 grid grid-cols-1 justify-center gap-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-2 xl:gap-8">
-              <div className="aspect-h-1 aspect-w-1 w-full ">
+            <div className="grid grid-cols-1 justify-center gap-6 sm:grid-cols-2 lg:grid-cols-2 xl:gap-8 bg-gray-100 shadow-lg">
+              <div className="bg-white h-full w-full ">
                 <img
-                  src={newThumbnail}
+                  src={import.meta.env.VITE_SERVER_ROOT + product.thumbnail}
                   alt={product.slug}
-                  className="p-2 object-center w-full h-full lg:h-full lg:w-full "
+                  className="p-2 object-center w-full h-full lg:h-full lg:w-full shadow-lg"
                 />
               </div>
               <div className="mt-6 sm:mt-0">
@@ -88,8 +86,10 @@ const ProductLanding = () => {
                   <label htmlFor="size" className="block">
                     Size
                   </label>
-                  <select className="ml-4 mt-2 font-medium md:text-xl text-sm">
-                    <option value="">Select an option</option>
+                  <select className="py-1 px-2.5 rounded-md mt-2 font-medium md:text-xl text-sm">
+                    <option className="py-2" value="">
+                      Select an option
+                    </option>
                     <option value="xs">X Small</option>
                     <option value="s">Small</option>
                     <option value="m">Medium</option>
@@ -101,7 +101,7 @@ const ProductLanding = () => {
                   <div className="block mt-6 xl:text-xl text-sm">
                     <span className="block">QTY </span>
                     <div className="block lg:flex justify-center w-fit items-center gap-4 ">
-                      <div className="justify-center items-center mt-2 border-gray-100 border-2 ">
+                      <div className="flex text-center items-center mt-2 border-gray-100 border-2 ">
                         <button
                           onClick={decrement}
                           type="button"
@@ -109,10 +109,7 @@ const ProductLanding = () => {
                         >
                           -
                         </button>
-                        <span className="w-30px">
-                          {count < 10 ? 0 : ""}
-                          {count}
-                        </span>
+                        <span className="min-w-6">{count}</span>
                         <button
                           onClick={increment}
                           type="button"
@@ -122,13 +119,13 @@ const ProductLanding = () => {
                         </button>
                       </div>
                       <div className="mt-2 lg:text-xl text-white bg-blue-700 hover:bg-green-800 focus:ring-4 font-medium text-sm lg:px-1 px-6 py-2.5 dark:bg-blue-500 dark:hover:bg-green-500 max-w-fit">
-                        <button className="lg:mx-10" onClick={orderItem}>
+                        <button className="lg:mx-4" onClick={itemAddToCart}>
                           Add to cart
                         </button>
                       </div>
                     </div>
 
-                    {count === 20 && (
+                    {count === product?.qty && (
                       <span className=" inline-block mt-6 text-sm font-normal text-red-500 ">
                         You reached to max number of qty
                       </span>
@@ -136,6 +133,9 @@ const ProductLanding = () => {
                   </div>
                 </div>
               </div>
+            </div>
+            <div className="md:w-1/2 mx-6 mt-3 text-justify md:text-xl">
+              Description: {product.description}
             </div>
           </div>
         </div>
@@ -148,7 +148,7 @@ const ProductLanding = () => {
             >
               <div className="shadow-lg hover:opacity-75">
                 <img
-                  src={item}
+                  src={import.meta.env.VITE_SERVER_ROOT + item}
                   alt={product.name}
                   className="p-2 object-center"
                 />

@@ -204,24 +204,24 @@ const Footer = () => {
         <div className="flex justify-start gap-12">
           <div className="catelouge-item block justify-center">
             <div className="py-2">
-              <a href="#">Bat</a>
+              <a href="/bats">Bat</a>
             </div>
             <div className="py-2">
-              <a href="#">Shoes</a>
+              <a href="/shoes">Shoes</a>
             </div>
             <div className="py-2">
-              <a href="#">Gloves</a>
+              <a href="/gloves">Gloves</a>
             </div>
           </div>
           <div className="catelouge-item block justify-center">
             <div className="py-2">
-              <a href="#">Mens</a>
+              <a href="/pads">Pads</a>
             </div>
             <div className="py-2">
               <a href="#">Womens</a>
             </div>
             <div className="py-2">
-              <a href="#">Cloths</a>
+              <a href="/cloths">Cloths</a>
             </div>
           </div>
           <div className="catelouge-item block justify-center">

@@ -8,3 +8,11 @@ export const fetchProducts = (slug) => {
         url: slug ? productAPI + "/" + slug : productAPI,
     })
 }
+
+export const fetchAllProductsByCatID = (_id) => {
+    return axiosProcesserAPI({
+        method: 'get',
+        url: productAPI + "/category/" + _id,
+        data: _id
+    })
+}
