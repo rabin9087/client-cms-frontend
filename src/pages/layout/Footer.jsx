@@ -1,4 +1,17 @@
+import { useEffect } from "react";
+import { getAllCategoriesAction } from "../category/categoryAction";
+import { fetchAllProducts } from "../products/productAction";
+import { useDispatch, useSelector } from "react-redux";
+
 const Footer = () => {
+  const dispatch = useDispatch();
+  const { categoryList } = useSelector((state) => state.categoryInfo);
+
+  useEffect(() => {
+    dispatch(getAllCategoriesAction());
+    dispatch(fetchAllProducts());
+  }, [dispatch]);
+  
   return (
     <div className="md:flex justify-around items-start w-full p-7 shadow-lg footer gap-4">
       <div className="block justify-start w-full  items-start mt-6 ">

@@ -42,7 +42,7 @@ const Products = ({ products }) => {
                 <div className="mt-4 justify-between">
                   <div>
                     <h3 className="text-lg text-gray-700">
-                      {name} <br /> {slug}
+                      {name} <br />
                     </h3>
                   </div>
                   <p className="text-lg font-bold text-gray-900">$ {price}</p>

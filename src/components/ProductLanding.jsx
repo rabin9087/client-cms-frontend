@@ -5,18 +5,20 @@ import { useDispatch, useSelector } from "react-redux";
 import UserLayout from "../pages/layout/UserLayout";
 import Rating from "./Rating";
 import { setAddToCartList } from "../pages/addToCart/addToCartSlice";
+import { FaLessThan } from "react-icons/fa6";
+import { FaGreaterThan } from "react-icons/fa6";
 
 const ProductLanding = () => {
   const { slug } = useParams();
   const dispatch = useDispatch();
-
+  const [thumbNailImage, setThumbnailImage] = useState();
   const { addToCartList } = useSelector((state) => state.addToCartInfo);
 
   const { product } = useSelector((state) => state.productInfo);
   const [carts, setCats] = useState(addToCartList);
-  const [addProduct, setAddProduct] = useState({});
-
+  const [addProduct, setAddProduct] = useState(product);
   const [count, setCount] = useState(1);
+  const [size, SetSize] = useState("");
   const decrement = () => {
     if (count > 1) {
       setCount((prev) => prev - 1);
@@ -29,45 +31,102 @@ const ProductLanding = () => {
     }
   };
 
+  const handelOnSize = (e) => {
+    const { value } = e.target;
+    if (value != "") {
+      SetSize(value);
+    }
+  };
+
   const itemAddToCart = () => {
-    setAddProduct(product);
-    console.log(addProduct);
     if (count > 0 && count < product?.qty) {
-      setAddProduct((prevAddProduct) => ({ ...prevAddProduct, qty: count }));
-      setCats((prevCarts) => [...prevCarts, addProduct]);
-      dispatch(setAddToCartList(carts));
+      const {
+        status,
+        description,
+        images,
+        createdAt,
+        updatedAt,
+        __v,
+        ...rest
+      } = product;
+      if (size != "") {
+        const updateProduct = { ...rest, orderQty: count, size };
+
+        dispatch(setAddToCartList(updateProduct));
+      } else {
+        alert("Please select size");
+      }
+    }
+  };
+  const options = [
+    { value: "xs", option: "X Small" },
+    { value: "s", option: "Small" },
+    { value: "m", option: "Medium" },
+    { value: "l", option: "Large" },
+    { value: "xl", option: "X Large" },
+    { value: "2xl", option: "2X Large" },
+    { value: "3xl", option: "3X Large" },
+  ];
+
+  const handelonSlide = (i) => {
+    if (product?.length) {
+      product?.image.map((item) => {
+        for (let i = 0; i <= product?.image.length; i++) {
+          setThumbnailImage(thumbNailImage.push(item(i)));
+        }
+      });
+      setThumbnailImage([i]);
     }
   };
 
   useEffect(() => {
     dispatch(fetchAProduct(slug));
-  }, [slug, dispatch]);
+    setCats(addToCartList);
+  }, [slug, dispatch, addToCartList]);
 
   return (
     <UserLayout>
-      <div className="block md:flex min-h-[73vh] justify-center gap-4 p-12">
-        <div className="hidden md:block items-center justify-center md:w-1/5 md:h-1/5 lg:w-1/6 lg:h-1/4 xl:w-1/12 xl:h-1/4">
+      <div className="block md:flex min-h-[73vh] justify-center gap-4 p-6">
+        <div className="hidden md:block items-center justify-center w-1/4 h-1/4 lg:w-1/6 lg:h-1/4 xl:w-1/12 xl:h-1/4">
           {product.images?.map((item, i) => (
             <div key={i} className="flex items-center justify-center my-auto">
               <div className="h-2/3 w- 2/3 shadow-lg hover:opacity-75 ">
-                <img
-                  src={import.meta.env.VITE_SERVER_ROOT + item}
-                  alt={product.name}
-                  className="p-2 productLangingImg object-center"
-                />
+                <button onClick={() => setThumbnailImage(item)}>
+                  <img
+                    src={import.meta.env.VITE_SERVER_ROOT + item}
+                    alt={product.name}
+                    className="p-2 productLangingImg object-center"
+                  />
+                </button>
               </div>
             </div>
           ))}
         </div>
         <div className="block w-full  shadow-lg pb-8 ">
-          <div className="block sm:flex h-5/6">
-            <div className="grid grid-cols-1 justify-center gap-6 sm:grid-cols-2 lg:grid-cols-2 xl:gap-8 bg-gray-100 shadow-lg">
-              <div className="bg-white h-full w-full ">
-                <img
-                  src={import.meta.env.VITE_SERVER_ROOT + product.thumbnail}
-                  alt={product.slug}
-                  className="p-2 object-center w-full h-full lg:h-full lg:w-full shadow-lg"
-                />
+          <div className="block lg:flex h-full">
+            <div className="grid grid-cols-1 justify-center gap-6 sm:grid-cols-2 lg:grid-cols-2 xl:gap-8 bg-gray-100 shadow-lg lg:w-2/3">
+              <div className="flex bg-white h-full w-full justify-center items-center">
+                <div className="sm:hidden">
+                  <button className="px-2" onClick={(i) => handelonSlide(i--)}>
+                    <FaLessThan />
+                  </button>
+                </div>
+                <div className="">
+                  <img
+                    src={
+                      thumbNailImage !== undefined
+                        ? import.meta.env.VITE_SERVER_ROOT + thumbNailImage
+                        : import.meta.env.VITE_SERVER_ROOT + product.thumbnail
+                    }
+                    alt={product.slug}
+                    className="p-2 object-center w-full h-full lg:h-full lg:w-full"
+                  />
+                </div>
+                <div className="sm:hidden">
+                  <button className="px-2" onClick={(i) => handelonSlide(i++)}>
+                    <FaGreaterThan />
+                  </button>
+                </div>
               </div>
               <div className="mt-6 sm:mt-0">
                 <div>
@@ -86,40 +145,42 @@ const ProductLanding = () => {
                   <label htmlFor="size" className="block">
                     Size
                   </label>
-                  <select className="py-1 px-2.5 rounded-md mt-2 font-medium md:text-xl text-sm">
+                  <select
+                    className="py-1 px-2.5 rounded-md mt-2 font-medium md:text-xl text-sm"
+                    value={size}
+                    onChange={handelOnSize}
+                  >
                     <option className="py-2" value="">
                       Select an option
                     </option>
-                    <option value="xs">X Small</option>
-                    <option value="s">Small</option>
-                    <option value="m">Medium</option>
-                    <option value="l">Large</option>
-                    <option value="xl">X Large</option>
-                    <option value="2xl">2XL Large</option>
-                    <option value="3xl">3X Large</option>
+                    {options.map(({ option, value }, i) => (
+                      <option key={i} value={value}>
+                        {option}
+                      </option>
+                    ))}
                   </select>
                   <div className="block mt-6 xl:text-xl text-sm">
                     <span className="block">QTY </span>
-                    <div className="block lg:flex justify-center w-fit items-center gap-4 ">
-                      <div className="flex text-center items-center mt-2 border-gray-100 border-2 ">
+                    <div className="block 2xl:flex justify-center w-full items-center gap-4 ">
+                      <div className="flex text-center items-center mt-2 border-gray-100 border-2 box-content w-1/2">
                         <button
                           onClick={decrement}
                           type="button"
-                          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 font-medium text-xl px-6 py-2.5 me-6 dark:bg-gray-600/35 dark:hover:bg-blue-700"
+                          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 font-medium text-xl px-4 py-1.5  sm:px-6 sm:py-2.5 me-6 dark:bg-gray-600/35 dark:hover:bg-blue-700"
                         >
                           -
                         </button>
-                        <span className="min-w-6">{count}</span>
+                        <span className="">{count}</span>
                         <button
                           onClick={increment}
                           type="button"
-                          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 font-medium text-xl px-6 py-2.5 ms-6 dark:bg-gray-600/35 dark:hover:bg-blue-700"
+                          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 font-medium text-xl px-4 py-1.5  sm:px-6 sm:py-2.5 ms-6 dark:bg-gray-600/35 dark:hover:bg-blue-700"
                         >
                           +
                         </button>
                       </div>
-                      <div className="mt-2 lg:text-xl text-white bg-blue-700 hover:bg-green-800 focus:ring-4 font-medium text-sm lg:px-1 px-6 py-2.5 dark:bg-blue-500 dark:hover:bg-green-500 max-w-fit">
-                        <button className="lg:mx-4" onClick={itemAddToCart}>
+                      <div className="mt-4 mb-2 lg:text-xl text-white bg-blue-700 hover:bg-green-800 focus:ring-4 font-medium text-sm lg:px-1 px-4 py-1.5 sm:py-2.5 dark:bg-blue-500 dark:hover:bg-green-500 max-w-fit">
+                        <button className="lg:mx-2" onClick={itemAddToCart}>
                           Add to cart
                         </button>
                       </div>
@@ -134,27 +195,10 @@ const ProductLanding = () => {
                 </div>
               </div>
             </div>
-            <div className="md:w-1/2 mx-6 mt-3 text-justify md:text-xl">
+            <div className="lg:w-1/2 mx-6 mt-3 text-justify md:text-xl">
               Description: {product.description}
             </div>
           </div>
-        </div>
-        {/* mobile view */}
-        <div className="md:hidden flex items-center justify-around gap-4 sm:w-2/3 ">
-          {product.images?.map((item, i) => (
-            <div
-              key={i}
-              className="flex items-center justify-around group relative "
-            >
-              <div className="shadow-lg hover:opacity-75">
-                <img
-                  src={import.meta.env.VITE_SERVER_ROOT + item}
-                  alt={product.name}
-                  className="p-2 object-center"
-                />
-              </div>
-            </div>
-          ))}
         </div>
       </div>
     </UserLayout>

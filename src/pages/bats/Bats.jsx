@@ -6,14 +6,14 @@ import { useDispatch, useSelector } from "react-redux";
 
 const Bats = ({ product }) => {
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
 
   const { productsByCatId } = useSelector((state) => state.productInfo);
   useEffect(() => {
-    if(product.length === 0){
-        setLoading(true)
+    if (product.length === 0) {
+      setLoading(true);
     }
-    setLoading(false)
+    setLoading(false);
     dispatch(fetchProductsById(product?._id));
   }, [dispatch, product]);
 

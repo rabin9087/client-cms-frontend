@@ -17,7 +17,6 @@ export const fetchAProduct = (slug) => async (dispatch) => {
 
 export const fetchProductsById = (_id) => async (dispatch) =>{
     const { status, products } = await fetchAllProductsByCatID(_id)
-    console.log(products)
     if (status === "success") {
         dispatch(SetProductsByCatId(products))
     }

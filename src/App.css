@@ -84,3 +84,21 @@ body {
         transform: rotate(360deg);
     }
 }
+
+.mobileMenu{
+  position: fixed;
+  padding-top: 20px;
+  float: left;
+  z-index: 2;
+  transform :show 2s ease-in-out;
+}
+
+@keyframes show {
+    0% {
+        transform: translateX(0)
+
+    }
+    100% {
+        transform: translateX(100);
+    }
+}

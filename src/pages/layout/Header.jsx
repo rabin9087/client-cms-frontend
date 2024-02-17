@@ -2,11 +2,20 @@ import { useEffect, useState } from "react";
 import { CustomeInput } from "../../components/CustomeInput";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { IoHomeSharp } from "react-icons/io5";
+import { GiCricketBat } from "react-icons/gi";
+import { GiRunningShoe } from "react-icons/gi";
+import { GiWinterGloves } from "react-icons/gi";
+import { GiClothes } from "react-icons/gi";
+import { HiTrendingUp } from "react-icons/hi";
+import { MdSportsCricket } from "react-icons/md";
 
 const Header = ({ products, setProducts }) => {
   const [tempProduct, setTempProduct] = useState(products);
+  const [showMenu, setShowMenu] = useState(false);
 
   const { addToCartList } = useSelector((state) => state.addToCartInfo);
+  
   const handelOnSearch = (e) => {
     const { value } = e.target;
 
@@ -16,70 +25,60 @@ const Header = ({ products, setProducts }) => {
     );
     setProducts(matchProduct);
   };
-  const navItems = [
-    "Home",
-    "Bats",
-    "Shoes",
-    "Gloves",
-    "Pads",
-    "Cloths",
-    "Trending",
-  ];
 
-  useEffect(() => {}, []);
+  const navItems = [
+    { navbar: "Home", url: "/", Icon: IoHomeSharp },
+    { navbar: "Bats", url: "/bats", Icon: GiCricketBat },
+    { navbar: "Shoes", url: "/shoes", Icon: GiRunningShoe },
+    { navbar: "Gloves", url: "/gloves", Icon: GiWinterGloves },
+    { navbar: "Pads", url: "/pads", Icon: IoHomeSharp },
+    { navbar: "Cloths", url: "/cloths", Icon: GiClothes },
+    { navbar: "Trending", url: "/trending", Icon: HiTrendingUp },
+  ];
 
   return (
     <>
-      <div className="shadow-lg w-full  ">
+      <div className={"shadow-lg w-full relative"}>
         <div className="flex w-full gap-2 p-7 justify-between items-center bg-blue-400">
           {/* mobile menu */}
           <div className="xl:hidden">
             <div className="menu">
               <span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  x="0px"
-                  y="0px"
-                  width="30"
-                  height="30"
-                  viewBox="0 0 32 32"
-                  color="white"
-                  className="text-white"
-                >
-                  <path d="M 4 7 L 4 9 L 28 9 L 28 7 Z M 4 15 L 4 17 L 28 17 L 28 15 Z M 4 23 L 4 25 L 28 25 L 28 23 Z"></path>
-                </svg>
-              </span>
-            </div>
-
-            <div className="hidden gap-5 w-full h-screen bg-blue-400">
-              <span className="flex text-lg text-center gap-6">
-                {navItems.map((item, i) => (
-                  <Link
-                    key={i}
-                    to={"/"}
-                    className="hover:underline hover:text-gray-600 "
+                <button onClick={() => setShowMenu(!showMenu)}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    x="0px"
+                    y="0px"
+                    width="30"
+                    height="30"
+                    viewBox="0 0 32 32"
+                    color="white"
+                    className="text-white"
                   >
-                    {" "}
-                    {item}{" "}
-                  </Link>
-                ))}
+                    <path d="M 4 7 L 4 9 L 28 9 L 28 7 Z M 4 15 L 4 17 L 28 17 L 28 15 Z M 4 23 L 4 25 L 28 25 L 28 23 Z"></path>
+                  </svg>
+                </button>
               </span>
             </div>
           </div>
           <div className="w-56 sm:block">
-            <span className="text-4xl font-bold">logo</span>
+            <span className="text-4xl font-bold">
+              <Link to={"/"}>
+                <MdSportsCricket className="w-full" />{" "}
+              </Link>{" "}
+            </span>
           </div>
           {/* categories */}
           <div className="hidden xl:flex gap-8 text-gray-800   justify-start">
             <span className="flex text-lg text-center gap-6">
-              {navItems.map((item, i) => (
+              {navItems.map(({ navbar, url }, i) => (
                 <Link
                   key={i}
-                  to={"/"}
+                  to={url}
                   className="hover:underline hover:text-gray-600"
                 >
                   {" "}
-                  {item}{" "}
+                  {navbar}{" "}
                 </Link>
               ))}
             </span>
@@ -88,7 +87,7 @@ const Header = ({ products, setProducts }) => {
           <div className="hidden sm:flex justify-end w-5/12 gap-2">
             <div className="w-5/6">
               <CustomeInput
-                placeholder={"Search Link Product"}
+                placeholder={"Search a Product"}
                 products={products}
                 setProducts={setProducts}
                 handelOnSearch={handelOnSearch}
@@ -126,7 +125,7 @@ const Header = ({ products, setProducts }) => {
               </Link>
             </div>
             <div>
-              <Link to={""}>
+              <Link to={"/signIn"}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -148,11 +147,26 @@ const Header = ({ products, setProducts }) => {
           </div>
         </div>
       </div>
+      {showMenu && (
+        <div className="mobileMenu gap-6 text-white  w-1/2 sm:w-1/3 h-full  bg-black">
+          <span className="block text-lg text-center">
+            {navItems.map(({ navbar, url, Icon }, i) => (
+              <Link
+                key={i}
+                to={url}
+                className="hover:underlin flex gap-2 items-center justify-between pe-4 text-left text-white overflow-visible py-2 hover:text-gray-600 ps-7 "
+              >
+                {navbar} {<Icon />}
+              </Link>
+            ))}
+          </span>
+        </div>
+      )}
       {/* mobile search bar */}
       <div className="block mt-4 sm:hidden w-full px-4  ">
         <div className="w-full ">
           <CustomeInput
-            placeholder={"Search Link Product"}
+            placeholder={"Search a Product"}
             products={products}
             setProducts={setProducts}
             handelOnSearch={handelOnSearch}
