@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import UserLayout from "../layout/UserLayout";
@@ -24,6 +24,9 @@ const Category = () => {
   const cloth = tempProduct.filter(
     (item) => item.parentCatId === categoryList[4]._id
   );
+  const ball = tempProduct.filter(
+    (item) => item.parentCatId === categoryList[5]._id
+  );
 
   const cat = [
     { category: "Bats", item: bats, url: "/bats" },
@@ -31,6 +34,7 @@ const Category = () => {
     { category: "Shoes", item: shoes, url: "/shoes" },
     { category: "Pads", item: pads, url: "/pads" },
     { category: "Cloths", item: cloth, url: "/cloths" },
+    { category: "Ball", item: ball, url: "/ball" },
   ];
 
   const [loading, setLoading] = useState(true);

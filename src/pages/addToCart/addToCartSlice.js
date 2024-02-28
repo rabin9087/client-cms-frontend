@@ -9,14 +9,26 @@ const addToCartSlice = createSlice({
     initialState,
     reducers: {
         setAddToCartList: (state, { payload }) => {
-            state.addToCartList.push(payload)
+            const filter = state.addToCartList.filter((item) => item?._id === payload?._id && item?.size === payload?.size)
+
+            if (filter.length > 0) {
+                state.addToCartList.filter((item) => item?._id === payload?._id)[0].orderQty = payload.orderQty
+            } else {
+                state.addToCartList.push(payload)
+            }
+
         },
-        setUpdateCartList: (state, { payload }) => {
+        setUpdateCartList: (state, { payload }) => {    
+            
             state.addToCartList.splice(payload, 1)
+        },
+        setUpdateItemOfCart: (state, { payload }) => {
+
+            state.addToCartList[payload.i].orderQty = payload.newOrderQty
         },
     },
 });
 
 const { actions, reducer } = addToCartSlice;
-export const { setAddToCartList, setUpdateCartList } = actions;
+export const { setAddToCartList, setUpdateCartList, setUpdateItemOfCart } = actions;
 export default reducer;

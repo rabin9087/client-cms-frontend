@@ -16,7 +16,6 @@ const ProductLanding = () => {
 
   const { product } = useSelector((state) => state.productInfo);
   const [carts, setCats] = useState(addToCartList);
-  const [addProduct, setAddProduct] = useState(product);
   const [count, setCount] = useState(1);
   const [size, SetSize] = useState("");
   const decrement = () => {
@@ -58,15 +57,6 @@ const ProductLanding = () => {
       }
     }
   };
-  const options = [
-    { value: "xs", option: "X Small" },
-    { value: "s", option: "Small" },
-    { value: "m", option: "Medium" },
-    { value: "l", option: "Large" },
-    { value: "xl", option: "X Large" },
-    { value: "2xl", option: "2X Large" },
-    { value: "3xl", option: "3X Large" },
-  ];
 
   const handelonSlide = (i) => {
     if (product?.length) {
@@ -87,18 +77,19 @@ const ProductLanding = () => {
   return (
     <UserLayout>
       <div className="block md:flex min-h-[73vh] justify-center gap-4 p-6">
-        <div className="hidden md:block items-center justify-center w-1/4 h-1/4 lg:w-1/6 lg:h-1/4 xl:w-1/12 xl:h-1/4">
+        <div className="hidden md:grid grid-rows-3 gap-1 h-96 w-40 ">
           {product.images?.map((item, i) => (
-            <div key={i} className="flex items-center justify-center my-auto">
-              <div className="h-2/3 w- 2/3 shadow-lg hover:opacity-75 ">
-                <button onClick={() => setThumbnailImage(item)}>
-                  <img
-                    src={import.meta.env.VITE_SERVER_ROOT + item}
-                    alt={product.name}
-                    className="p-2 productLangingImg object-center"
-                  />
-                </button>
-              </div>
+            <div
+              key={i}
+              className="flex justify-center w-full h-28 rounded-md group-hover:opacity-75 hover:opacity-75 shadow-lg"
+            >
+              <button onClick={() => setThumbnailImage(item)}>
+                <img
+                  src={import.meta.env.VITE_SERVER_ROOT + item}
+                  alt={product.name}
+                  className="p-2 object-center w-20 h-28"
+                />
+              </button>
             </div>
           ))}
         </div>
@@ -111,7 +102,7 @@ const ProductLanding = () => {
                     <FaLessThan />
                   </button>
                 </div>
-                <div className="">
+                <div className="aspect-h-1 aspect-w-1 w-4/5 h-4/5 rounded-md lg:aspect-none group-hover:opacity-75 lg:h-80 shadow-lg ">
                   <img
                     src={
                       thumbNailImage !== undefined
@@ -119,7 +110,7 @@ const ProductLanding = () => {
                         : import.meta.env.VITE_SERVER_ROOT + product.thumbnail
                     }
                     alt={product.slug}
-                    className="p-2 object-center w-full h-full lg:h-full lg:w-full"
+                    className="productLangingImg p-2 object-center w-full h-full lg:h-full lg:w-full"
                   />
                 </div>
                 <div className="sm:hidden">
@@ -153,9 +144,10 @@ const ProductLanding = () => {
                     <option className="py-2" value="">
                       Select an option
                     </option>
-                    {options.map(({ option, value }, i) => (
-                      <option key={i} value={value}>
-                        {option}
+
+                    {product.sizes?.map((item, i) => (
+                      <option key={i} value={item}>
+                        {item}
                       </option>
                     ))}
                   </select>

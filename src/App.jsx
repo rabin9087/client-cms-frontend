@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import "./App.css";
 import Home from "./components/Home";
 import { Routes, Route } from "react-router-dom";
@@ -27,7 +27,7 @@ function App() {
   return (
     <div className="app">
       <Routes>
-      <Route path="/signIn" element={<SignIn />} />
+        <Route path="/signIn" element={<SignIn />} />
 
         <Route path="/" element={<Home />} />
         <Route path="/product/:slug" element={<ProductLanding />} />

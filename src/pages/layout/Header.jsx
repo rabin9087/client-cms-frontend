@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { CustomeInput } from "../../components/CustomeInput";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -15,7 +15,7 @@ const Header = ({ products, setProducts }) => {
   const [showMenu, setShowMenu] = useState(false);
 
   const { addToCartList } = useSelector((state) => state.addToCartInfo);
-  
+
   const handelOnSearch = (e) => {
     const { value } = e.target;
 
@@ -117,7 +117,10 @@ const Header = ({ products, setProducts }) => {
                   </svg>
                   {addToCartList?.length > 0 && (
                     <span className="text-md shadow-lg rounded-full px-3 bg-red-500 p-1">
-                      {addToCartList?.length}
+                      {/* {addToCartList?.length} */}
+                      {addToCartList.reduce((acc, { orderQty }) => {
+                        return acc + orderQty;
+                      }, 0)}
                     </span>
                   )}
                 </div>
@@ -146,22 +149,23 @@ const Header = ({ products, setProducts }) => {
             </div>
           </div>
         </div>
+        {showMenu && (
+          <div className="mobileMenu gap-6 text-white w-full sm:w-1/5 h-full  bg-black">
+            <span className="block text-lg text-center">
+              {navItems.map(({ navbar, url, Icon }, i) => (
+                <Link
+                  key={i}
+                  to={url}
+                  className="hover:underlin flex gap-2 items-center justify-between pe-4 text-left text-white overflow-visible py-2 hover:text-gray-600 ps-7 "
+                >
+                  {navbar} {<Icon />}
+                </Link>
+              ))}
+            </span>
+          </div>
+        )}
       </div>
-      {showMenu && (
-        <div className="mobileMenu gap-6 text-white  w-1/2 sm:w-1/3 h-full  bg-black">
-          <span className="block text-lg text-center">
-            {navItems.map(({ navbar, url, Icon }, i) => (
-              <Link
-                key={i}
-                to={url}
-                className="hover:underlin flex gap-2 items-center justify-between pe-4 text-left text-white overflow-visible py-2 hover:text-gray-600 ps-7 "
-              >
-                {navbar} {<Icon />}
-              </Link>
-            ))}
-          </span>
-        </div>
-      )}
+
       {/* mobile search bar */}
       <div className="block mt-4 sm:hidden w-full px-4  ">
         <div className="w-full ">

@@ -3,27 +3,33 @@ import UserLayout from "../layout/UserLayout";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { setAddToCartList, setUpdateCartList } from "./addToCartSlice";
+import { setUpdateCartList, setUpdateItemOfCart } from "./addToCartSlice";
+import Payment from "../payment/Payment";
 
 const AddToCart = () => {
   const { addToCartList } = useSelector((state) => state.addToCartInfo);
   const dispatch = useDispatch();
   const [newcart, setNewCart] = useState(addToCartList);
-  const [newOrderQty, setNewOrderQty] = useState();
-  const decrement = () => {
-    if (newOrderQty > 1) {
-      setNewOrderQty((prev) => prev - 1);
+  const [totalAmount, setTotalAmount] = useState(0);
+
+  const decrement = (orderQty, i) => {
+    const newOrderQty = orderQty - 1;
+    if (newOrderQty > 0) {
+      dispatch(setUpdateItemOfCart({ i, newOrderQty }));
     }
   };
 
-  const increment = () => {
-    if (newOrderQty) {
-      setNewOrderQty((prev) => prev + 1);
+  const increment = (qty, orderQty, i) => {
+    const newOrderQty = orderQty + 1;
+    if (qty === orderQty) {
+      alert("You have reached the maximum number of items available");
+    }
+    if (newOrderQty <= qty) {
+      dispatch(setUpdateItemOfCart({ i, newOrderQty }));
     }
   };
-
-  const handelOnDeleteItem = (i) => {
-    if (window.confirm("Are You sure want to delete this item?")) {
+  const handelOnDeleteItem = (i, name) => {
+    if (window.confirm(`Are You sure want to remove ${name} from cart?`)) {
       return setNewCart(dispatch(setUpdateCartList(i)));
     }
   };
@@ -41,25 +47,28 @@ const AddToCart = () => {
       )}
       {newcart.length > 0 && (
         <div className="m-7">
-          <div className="flex mt-10 justify-start text-2xl font-bold">
+          <div className="flex mt-10 justify-start text-2xl font-medium">
             {newcart.length} Items in your Cart
           </div>
           <div className="block md:flex  justify-center  w-full mt-6">
             <div className="block md:w-1/2  border-black border-2 mx-0">
               {newcart.map(
-                ({ _id, thumbnail, name, orderQty, price, slug }, i) => (
+                (
+                  { _id, thumbnail, name, orderQty, price, slug, qty, size },
+                  i
+                ) => (
                   <div key={_id}>
                     {_id !== "" && (
                       <div
                         key={_id}
-                        className="flex justify-between p-6 border-b-2"
+                        className="flex justify-between px-2 py-3 md:p-6 border-b-2"
                       >
-                        <div className="flex">
+                        <div className="flex items-center">
                           <Link to={`/product/${slug}`}>
-                            <div className="flex justify-center items-center shadow-lg">
+                            <div className="flex justify-center items-center shadow-lg border-2 w-16 h-24 md:w-24 md:h-28">
                               <img
                                 width={"80px"}
-                                height={"80px"}
+                                height={"100px"}
                                 src={
                                   import.meta.env.VITE_SERVER_ROOT + thumbnail
                                 }
@@ -68,15 +77,20 @@ const AddToCart = () => {
                             </div>
                           </Link>
                           <div className="ps-6 font-medium ">
-                            <Link to={`/product/${slug}`}>
-                              <div className="hover:underline">{name}</div>
-                            </Link>
+                            <div className="flex justify-between gap-4">
+                              <Link to={`/product/${slug}`}>
+                                <div className="hover:underline font-bold text-base">
+                                  {name}
+                                </div>
+                              </Link>
+                              <div className="">Size: {size}</div>
+                            </div>
                             <div className="block sm:flex gap-3 mt-2 xl:text-xl text-sm">
                               <span className="block">QTY </span>
                               <div className="block lg:flex justify-center w-fit items-center gap-4 ">
                                 <div className="justify-center items-center ms:mt-0 border-gray-100 border-2 ">
                                   <button
-                                    onClick={decrement}
+                                    onClick={() => decrement(orderQty, i)}
                                     type="button"
                                     className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 font-medium text-xl md:px-6 px-2 me-2  md:me-6 dark:bg-gray-600/35 dark:hover:bg-blue-700"
                                   >
@@ -84,7 +98,7 @@ const AddToCart = () => {
                                   </button>
                                   <span className="w-30px">{orderQty}</span>
                                   <button
-                                    onClick={increment}
+                                    onClick={() => increment(qty, orderQty, i)}
                                     type="button"
                                     className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 font-medium text-xl md:px-6 px-2 ms-2  md:ms-6 dark:bg-gray-600/35 dark:hover:bg-blue-700"
                                   >
@@ -103,7 +117,7 @@ const AddToCart = () => {
                           <div className="">${price * orderQty}</div>
                           <div className="flex justify-center items-center mt-2 text-red-500">
                             <button
-                              onClick={() => handelOnDeleteItem(i)}
+                              onClick={() => handelOnDeleteItem(i, name)}
                               className="p-2 rounded-full hover:bg-gray-500/10"
                             >
                               <RiDeleteBin6Line />
@@ -120,16 +134,24 @@ const AddToCart = () => {
 
                 <div>
                   $
-                  {newcart.reduce((acc, { price }) => {
-                    return acc + price;
+                  {newcart.reduce((acc, { price, orderQty }) => {
+                    return acc + price * orderQty;
                   }, 0)}
                 </div>
               </div>
             </div>
-            <div className="text-base md:text-2xl font-medium md:font-bold md:w-1/2 ms-7">
-              <div>Payment Method</div>
-              <div></div>
-            </div>
+            {() =>
+              setTotalAmount(
+                newcart.reduce((acc, { price, orderQty }) => {
+                  return acc + price * orderQty;
+                }, 0)
+              )
+            }
+            <Payment
+              totalAmount={newcart.reduce((acc, { price, orderQty }) => {
+                return acc + price * orderQty;
+              }, 0)}
+            />
           </div>
         </div>
       )}
