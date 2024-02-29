@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import UserLayout from "../layout/UserLayout";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { setUpdateCartList, setUpdateItemOfCart } from "./addToCartSlice";
 import Payment from "../payment/Payment";
@@ -9,6 +9,7 @@ import Payment from "../payment/Payment";
 const AddToCart = () => {
   const { addToCartList } = useSelector((state) => state.addToCartInfo);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [newcart, setNewCart] = useState(addToCartList);
   const [totalAmount, setTotalAmount] = useState(0);
 
@@ -47,11 +48,11 @@ const AddToCart = () => {
       )}
       {newcart.length > 0 && (
         <div className="m-7">
-          <div className="flex mt-10 justify-start text-2xl font-medium">
+          <div className="flex mt-10 justify-center text-2xl font-medium">
             {newcart.length} Items in your Cart
           </div>
           <div className="block md:flex  justify-center  w-full mt-6">
-            <div className="block md:w-1/2  border-black border-2 mx-0">
+            <div className="block md:w-1/2  border-black border-2 mx-0 h-fit">
               {newcart.map(
                 (
                   { _id, thumbnail, name, orderQty, price, slug, qty, size },
@@ -61,11 +62,11 @@ const AddToCart = () => {
                     {_id !== "" && (
                       <div
                         key={_id}
-                        className="flex justify-between px-2 py-3 md:p-6 border-b-2"
+                        className=" flex gap-2 items-center px-2 py-3 md:p-6 border-b-2"
                       >
-                        <div className="flex items-center">
+                        <div className="w-3/4 flex gap-2 items-center">
                           <Link to={`/product/${slug}`}>
-                            <div className="flex justify-center items-center shadow-lg border-2 w-16 h-24 md:w-24 md:h-28">
+                            <div className="flex justify-center items-center shadow-lg border-2 w-16 h-24 md:w-24 md:h-32">
                               <img
                                 width={"80px"}
                                 height={"100px"}
@@ -77,13 +78,12 @@ const AddToCart = () => {
                             </div>
                           </Link>
                           <div className="ps-6 font-medium ">
-                            <div className="flex justify-between gap-4">
+                            <div className="flex">
                               <Link to={`/product/${slug}`}>
                                 <div className="hover:underline font-bold text-base">
                                   {name}
                                 </div>
                               </Link>
-                              <div className="">Size: {size}</div>
                             </div>
                             <div className="block sm:flex gap-3 mt-2 xl:text-xl text-sm">
                               <span className="block">QTY </span>
@@ -107,15 +107,17 @@ const AddToCart = () => {
                                 </div>
                               </div>
                             </div>
-
-                            <div className="font-medium mt-4">
-                              Price/Item: ${price}
+                            <div className="blcok md:flex justify-between items-center mt-2">
+                              <div className="font-medium">
+                                Price/Item: ${price}
+                              </div>
+                              <div className="">Size: {size}</div>
                             </div>
                           </div>
                         </div>
-                        <div className="md:my-5 font-medium md:font-bold md:text-xl text-base text-end md:me-8">
+                        <div className="w-1/4 flex-col md:my-5 font-medium md:font-bold md:text-xl text-base text-end md:me-8">
                           <div className="">${price * orderQty}</div>
-                          <div className="flex justify-center items-center mt-2 text-red-500">
+                          <div className="mt-2 text-red-500">
                             <button
                               onClick={() => handelOnDeleteItem(i, name)}
                               className="p-2 rounded-full hover:bg-gray-500/10"
@@ -140,18 +142,16 @@ const AddToCart = () => {
                 </div>
               </div>
             </div>
-            {() =>
-              setTotalAmount(
-                newcart.reduce((acc, { price, orderQty }) => {
-                  return acc + price * orderQty;
-                }, 0)
-              )
-            }
-            <Payment
-              totalAmount={newcart.reduce((acc, { price, orderQty }) => {
-                return acc + price * orderQty;
-              }, 0)}
-            />
+          </div>
+          <div className="flex justify-center gap-4 w-full">
+            <div className="mt-4 mb-2 rounded-lg lg:text-xl text-white bg-blue-700 hover:bg-green-800 focus:ring-4 font-medium text-sm lg:px-1 px-4 py-1.5 sm:py-2.5 dark:bg-blue-500 dark:hover:bg-green-500 max-w-fit">
+              <button onClick={() => navigate("/payment")}>
+                Continue as Guest
+              </button>
+            </div>
+            <div className="mt-4 rounded-lg mb-2 lg:text-xl text-white bg-blue-700 hover:bg-green-800 focus:ring-4 font-medium text-sm lg:px-1 px-4 py-1.5 sm:py-2.5 dark:bg-blue-500 dark:hover:bg-green-500 max-w-fit">
+              <button onClick={() => navigate("/login")}>Login</button>
+            </div>
           </div>
         </div>
       )}
