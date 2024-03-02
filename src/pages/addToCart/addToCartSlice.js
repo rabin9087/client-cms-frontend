@@ -18,17 +18,20 @@ const addToCartSlice = createSlice({
             }
 
         },
-        setUpdateCartList: (state, { payload }) => {    
-            
+        setUpdateCartList: (state, { payload }) => {
+
             state.addToCartList.splice(payload, 1)
         },
         setUpdateItemOfCart: (state, { payload }) => {
 
             state.addToCartList[payload.i].orderQty = payload.newOrderQty
         },
+        DeleteAddToCartList: (state, { payload }) => {
+            state.addToCartList.splice(0, payload)
+        }
     },
 });
 
 const { actions, reducer } = addToCartSlice;
-export const { setAddToCartList, setUpdateCartList, setUpdateItemOfCart } = actions;
+export const { setAddToCartList, setUpdateCartList, setUpdateItemOfCart, DeleteAddToCartList } = actions;
 export default reducer;

@@ -15,6 +15,7 @@ import Pads from "./pages/pads/Pads";
 import Category from "./pages/category/Category";
 import SignIn from "./pages/sign-in-up/SignIn";
 import Payment from "./pages/payment/Payment";
+import Orders from "./pages/order/Orders";
 
 function App() {
   const dispatch = useDispatch();
@@ -40,6 +41,7 @@ function App() {
         <Route path="/cloths" element={<Cloths product={categoryList[4]} />} />
         <Route path="/trending" element={<Category />} />
         <Route path="/payment" element={<Payment/>} />
+        <Route path="/orders" element={<Orders/>} />
       </Routes>
     </div>
   );

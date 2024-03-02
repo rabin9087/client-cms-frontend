@@ -4,14 +4,12 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { setUpdateCartList, setUpdateItemOfCart } from "./addToCartSlice";
-import Payment from "../payment/Payment";
 
 const AddToCart = () => {
   const { addToCartList } = useSelector((state) => state.addToCartInfo);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [newcart, setNewCart] = useState(addToCartList);
-  const [totalAmount, setTotalAmount] = useState(0);
 
   const decrement = (orderQty, i) => {
     const newOrderQty = orderQty - 1;
