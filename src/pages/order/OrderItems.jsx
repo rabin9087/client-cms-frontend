@@ -1,5 +1,11 @@
-const OrderItems = ({ order }) => {
-  const { address, items } = order;
+
+const OrderItems = () => {
+
+  // const { order } = useSelector((state) => state.orderInfo);
+  const orders = JSON.parse(localStorage.getItem("orders"));
+
+  const { address, items } = orders;
+ 
   return (
     <div className="m-5 mt-4 ">
       <h3 className="text-center py-4 text-lg font-bold underline">
