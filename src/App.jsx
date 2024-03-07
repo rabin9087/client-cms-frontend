@@ -10,12 +10,14 @@ import AddToCart from "./pages/addToCart/AddToCart";
 import Bats from "./pages/bats/Bats";
 import Cloths from "./pages/cloths/Cloths";
 import Shoes from "./pages/shoes/Shoes";
+import { ToastContainer } from "react-toastify";
 import Gloves from "./pages/gloves/Gloves";
 import Pads from "./pages/pads/Pads";
 import Category from "./pages/category/Category";
 import SignIn from "./pages/sign-in-up/SignIn";
 import Payment from "./pages/payment/Payment";
 import Orders from "./pages/order/Orders";
+import SignUp from "./pages/sign-in-up/SignUp";
 
 function App() {
   const dispatch = useDispatch();
@@ -30,6 +32,7 @@ function App() {
     <div className="app">
       <Routes>
         <Route path="/signIn" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp />} />
 
         <Route path="/" element={<Home />} />
         <Route path="/product/:slug" element={<ProductLanding />} />
@@ -40,9 +43,21 @@ function App() {
         <Route path="/pads" element={<Pads product={categoryList[3]} />} />
         <Route path="/cloths" element={<Cloths product={categoryList[4]} />} />
         <Route path="/trending" element={<Category />} />
-        <Route path="/payment" element={<Payment/>} />
-        <Route path="/orders" element={<Orders/>} />
+        <Route path="/payment" element={<Payment />} />
+        <Route path="/orders" element={<Orders />} />
       </Routes>
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </div>
   );
 }
