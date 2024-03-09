@@ -1,16 +1,21 @@
 import UserLayout from "../layout/UserLayout";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { toast } from "react-toastify";
 import { signInUser } from "../../helper/userAxios/userAxios";
 import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { setAUser } from "./userSlice";
+import { fetchUserProfile } from "./userAction";
 
 const SignIn = () => {
   const emailRef = useRef("");
   const passwordRef = useRef("");
-  const dispatch = useDispatch();
+const dispatch = useDispatch()
   const navigate = useNavigate();
+
+  const location = useLocation();
+  console.log(location);
+  const fromLocation = location.state?.from?.location?.pathname || "/signIn";
 
   const handelOnSubmit = async (e) => {
     e.preventDefault();
@@ -36,11 +41,16 @@ const SignIn = () => {
       const { refreshJWT, accessJWT } = jwts;
       sessionStorage.setItem("accessJWT", accessJWT);
       localStorage.setItem("refreshJWT", refreshJWT);
+      fetchUserProfile();
       dispatch(setAUser());
       return navigate("/");
     }
     return;
   };
+
+  useEffect(() => {
+    dispatch(fetchUserProfile()) && navigate(fromLocation);
+  }, [dispatch, navigate, fromLocation]);
 
   const input = [
     {

@@ -3,6 +3,7 @@ import { featchNewAccessJWT } from '../userAxios/userAxios'
 
 const rootAPI = import.meta.env.VITE_ROOT_API
 export const axiosAPI = rootAPI + "/api/v1"
+export const userAPI = axiosAPI + "/users"
 
 export const getAccessJWT = () => {
     return sessionStorage.getItem("accessJWT")
@@ -13,7 +14,7 @@ export const getRefreshJWT = () => {
 }
 
 export const axiosProcesserAPI = async ({ method, url, refreshToken, ...rest }) => {
-
+    console.log("processer", rest)
     try {
         const token = refreshToken ? getRefreshJWT() : getAccessJWT()
         const headers = {

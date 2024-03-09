@@ -1,6 +1,4 @@
-import { axiosAPI, axiosProcesserAPI } from "../axios/axios";
-
-export const userAPI = axiosAPI + "/users"
+import { axiosProcesserAPI, userAPI } from "../axios/axios";
 
 export const createAUser = (data) => {
     return axiosProcesserAPI({
@@ -31,6 +29,14 @@ export const featchNewAccessJWT = () => {
         method: 'get',
         url: userAPI + "/get-accessjwt",
         refreshToken: true,
+    })
+}
+
+export const LogOutUser = (_id) => {
+    return axiosProcesserAPI({
+        method: 'post',
+        url: userAPI + "/logout",
+        data: { _id }
     })
 }
 

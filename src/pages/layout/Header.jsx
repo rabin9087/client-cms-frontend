@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { CustomeInput } from "../../components/CustomeInput";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import { IoHomeSharp } from "react-icons/io5";
 import { GiCricketBat } from "react-icons/gi";
 import { GiRunningShoe } from "react-icons/gi";
@@ -9,12 +9,17 @@ import { GiWinterGloves } from "react-icons/gi";
 import { GiClothes } from "react-icons/gi";
 import { HiTrendingUp } from "react-icons/hi";
 import { MdSportsCricket } from "react-icons/md";
+import { setAUser } from "../sign-in-up/userSlice";
+import { LogOutUser } from "../../helper/userAxios/userAxios";
 
 const Header = ({ products, setProducts }) => {
   const [tempProduct, setTempProduct] = useState(products);
   const [showMenu, setShowMenu] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const { addToCartList } = useSelector((state) => state.addToCartInfo);
+  const addToCartList = JSON.parse(localStorage.getItem("addToCartList"));
+  const { user } = useSelector((state) => state.userInfo);
 
   const handelOnSearch = (e) => {
     const { value } = e.target;
@@ -24,6 +29,12 @@ const Header = ({ products, setProducts }) => {
       item.name.toLowerCase().includes(value.toLowerCase())
     );
     setProducts(matchProduct);
+  };
+
+  const handelOnLogOut = () => {
+    localStorage.removeItem("refreshJWT");
+    LogOutUser(user?._id);
+    dispatch(setAUser({})) && navigate("/");
   };
 
   const navItems = [
@@ -128,24 +139,45 @@ const Header = ({ products, setProducts }) => {
               </Link>
             </div>
             <div>
-              <Link to={"/signIn"}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="currentColor"
-                  className="w-full h-8"
-                  color="white"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15"
-                  />
-                </svg>
-                Log In
-              </Link>
+              {user?._id ? (
+                <Link onClick={handelOnLogOut}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="w-full h-8"
+                    color="white"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15"
+                    />
+                  </svg>
+                  Log Out
+                </Link>
+              ) : (
+                <Link to={"/signIn"}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="w-full h-8"
+                    color="white"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15"
+                    />
+                  </svg>
+                  Log In
+                </Link>
+              )}
             </div>
           </div>
         </div>

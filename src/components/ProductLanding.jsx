@@ -7,17 +7,22 @@ import Rating from "./Rating";
 import { setAddToCartList } from "../pages/addToCart/addToCartSlice";
 import { FaLessThan } from "react-icons/fa6";
 import { FaGreaterThan } from "react-icons/fa6";
+import { createAddToCartAction } from "../pages/addToCart/addToCartAction";
 
 const ProductLanding = () => {
   const { slug } = useParams();
   const dispatch = useDispatch();
   const [thumbNailImage, setThumbnailImage] = useState();
   const { addToCartList } = useSelector((state) => state.addToCartInfo);
+  const { user } = useSelector((state) => state.userInfo);
+  const [cartList, setCarList] = useState(addToCartList);
+  localStorage.setItem("addToCartList", JSON.stringify(addToCartList));
 
   const { product } = useSelector((state) => state.productInfo);
   const [carts, setCats] = useState(addToCartList);
-  const [count, setCount] = useState(1);
+  
   const [size, SetSize] = useState("");
+  const [count, setCount] = useState(1);
   const decrement = () => {
     if (count > 1) {
       setCount((prev) => prev - 1);
@@ -39,19 +44,34 @@ const ProductLanding = () => {
 
   const itemAddToCart = () => {
     if (count > 0 && count < product?.qty) {
-      const {
-        status,
-        description,
-        images,
-        createdAt,
-        updatedAt,
-        __v,
-        ...rest
-      } = product;
       if (size != "") {
-        const updateProduct = { ...rest, orderQty: count, size };
-
+        const updateProduct = { ...product, orderQty: count, size };
         dispatch(setAddToCartList(updateProduct));
+        // if (user?._id) {
+        //   const filter = cartList.filter(
+        //     (item) =>
+        //       item?._id === updateProduct?._id &&
+        //       item?.size === updateProduct?.size
+        //   );
+
+        //   if (filter.length > 0) {
+        //     cartList.filter(
+        //       (item) => item?._id === updateProduct?._id
+        //     )[0].orderQty = updateProduct.orderQty;
+        //   } else {
+        //     setCarList([...cartList, updateProduct]);
+        //   }
+        //   console.log(cartList);
+        //   dispatch(
+        //     createAddToCartAction({
+        //       user: user._id,
+        //       items: cartList,
+        //       cartStatus: "pending",
+        //     })
+        //   );
+        // } else {
+        //   dispatch(setAddToCartList(updateProduct));
+        // }
       } else {
         alert("Please select size");
       }

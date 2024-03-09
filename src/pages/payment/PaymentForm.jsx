@@ -20,6 +20,7 @@ const PaymentForm = ({ totalAmount }) => {
   const [loading, setLoading] = useState(false);
 
   const { addToCartList } = useSelector((state) => state.addToCartInfo);
+  const { user } = useSelector((state) => state.userInfo);
 
   const handelOnAddressChange = async () => {
     const addressElement = elements.getElement("address");
@@ -72,17 +73,21 @@ const PaymentForm = ({ totalAmount }) => {
     if (paymentIntent.status === "succeeded") {
       dispatch(
         postOrderProducts({
+          userId: user._id || "",
+          dispatchedQty: 0,
           items: addToCartList,
           address: updateForm,
           pay: paymentIntent,
+          amount: totalAmount,
         })
       );
 
       dispatch(DeleteAddToCartList(addToCartList.length));
       setLoading(false);
       console.log(loading);
-      return navigate("/orders") && alert("Items has been ordered successfully");
-     
+      return (
+        navigate("/orders") && alert("Items has been ordered successfully")
+      );
     }
     return alert(
       "Unable to place your order, please try again or contact admininstartion"
@@ -150,13 +155,10 @@ const PaymentForm = ({ totalAmount }) => {
 
               <div
                 className={
-                 "grid-d justify-center text-center mt-4 mb-2 rounded-lg lg:text-xl text-white bg-blue-700 hover:bg-green-800 focus:ring-4 font-medium text-sm lg:px-1 px-4 py-1.5 sm:py-2.5 dark:bg-blue-500 dark:hover:bg-green-500"
-                    
+                  "grid-d justify-center text-center mt-4 mb-2 rounded-lg lg:text-xl text-white bg-blue-700 hover:bg-green-800 focus:ring-4 font-medium text-sm lg:px-1 px-4 py-1.5 sm:py-2.5 dark:bg-blue-500 dark:hover:bg-green-500"
                 }
               >
-                <button type="submit">
-                  check out
-                </button>
+                <button type="submit">check out</button>
               </div>
             </div>
           )}

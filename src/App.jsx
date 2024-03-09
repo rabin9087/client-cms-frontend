@@ -18,15 +18,25 @@ import SignIn from "./pages/sign-in-up/SignIn";
 import Payment from "./pages/payment/Payment";
 import Orders from "./pages/order/Orders";
 import SignUp from "./pages/sign-in-up/SignUp";
+import { fetchUserProfile } from "./pages/sign-in-up/userAction";
+import { fetchAllCartList } from "./pages/addToCart/addToCartAction";
 
 function App() {
   const dispatch = useDispatch();
-  const { categoryList } = useSelector((state) => state.categoryInfo);
 
+  const { categoryList } = useSelector((state) => state.categoryInfo);
+  const { addToCartList } = useSelector((state) => state.addToCartInfo);
+  const { user } = useSelector((state) => state.userInfo);
+  localStorage.setItem("addToCartList", JSON.stringify(addToCartList));
   useEffect(() => {
+    
+    dispatch(fetchUserProfile());
     dispatch(getAllCategoriesAction());
     dispatch(fetchAllProducts());
-  }, [dispatch]);
+    // if (user?._id) {
+    //   dispatch(fetchAllCartList());
+    // }
+  }, [dispatch, user?._id]);
 
   return (
     <div className="app">
