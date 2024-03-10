@@ -7,6 +7,7 @@ import { setUpdateCartList, setUpdateItemOfCart } from "./addToCartSlice";
 
 const AddToCart = () => {
   const { addToCartList } = useSelector((state) => state.addToCartInfo);
+  const { user } = useSelector((state) => state.userInfo);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [newcart, setNewCart] = useState(addToCartList);
@@ -141,16 +142,26 @@ const AddToCart = () => {
               </div>
             </div>
           </div>
-          <div className="flex justify-center gap-4 w-full">
-            <div className="mt-4 mb-2 rounded-lg lg:text-xl text-white bg-blue-700 hover:bg-green-800 focus:ring-4 font-medium text-sm lg:px-1 px-4 py-1.5 sm:py-2.5 dark:bg-blue-500 dark:hover:bg-green-500 max-w-fit">
-              <button onClick={() => navigate("/payment")}>
-                Continue as Guest
-              </button>
+          {user?._id ? (
+            <div className="flex justify-center gap-4 w-full">
+              <div className="mt-4 mb-2 rounded-lg lg:text-xl text-white bg-blue-700 hover:bg-green-800 focus:ring-4 font-medium text-sm lg:px-2 px-4 py-1.5 sm:py-2.5 dark:bg-blue-500 dark:hover:bg-green-500 max-w-fit">
+                <button onClick={() => navigate("/payment")}>
+                  Check Out Now
+                </button>
+              </div>
             </div>
-            <div className="mt-4 rounded-lg mb-2 lg:text-xl text-white bg-blue-700 hover:bg-green-800 focus:ring-4 font-medium text-sm lg:px-1 px-4 py-1.5 sm:py-2.5 dark:bg-blue-500 dark:hover:bg-green-500 max-w-fit">
-              <button onClick={() => navigate("/login")}>Login</button>
+          ) : (
+            <div className="flex justify-center gap-4 w-full">
+              <div className="mt-4 mb-2 rounded-lg lg:text-xl text-white bg-blue-700 hover:bg-green-800 focus:ring-4 font-medium text-sm lg:px-1 px-4 py-1.5 sm:py-2.5 dark:bg-blue-500 dark:hover:bg-green-500 max-w-fit">
+                <button onClick={() => navigate("/payment")}>
+                  Continue as Guest
+                </button>
+              </div>
+              <div className="mt-4 rounded-lg mb-2 lg:text-xl text-white bg-blue-700 hover:bg-green-800 focus:ring-4 font-medium text-sm lg:px-1 px-4 py-1.5 sm:py-2.5 dark:bg-blue-500 dark:hover:bg-green-500 max-w-fit">
+                <button onClick={() => navigate("/login")}>Login</button>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       )}
     </UserLayout>

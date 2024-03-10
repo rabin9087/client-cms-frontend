@@ -158,7 +158,12 @@ const PaymentForm = ({ totalAmount }) => {
                   "grid-d justify-center text-center mt-4 mb-2 rounded-lg lg:text-xl text-white bg-blue-700 hover:bg-green-800 focus:ring-4 font-medium text-sm lg:px-1 px-4 py-1.5 sm:py-2.5 dark:bg-blue-500 dark:hover:bg-green-500"
                 }
               >
-                <button type="submit">check out</button>
+                <button
+                  type="submit"
+                  className={loading ? "spinnerCheckOut" : ""}
+                >
+                  {loading ? "" : "check out "}
+                </button>
               </div>
             </div>
           )}
