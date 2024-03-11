@@ -20,7 +20,7 @@ const ProductLanding = () => {
 
   const { product } = useSelector((state) => state.productInfo);
   const [carts, setCats] = useState(addToCartList);
-  
+
   const [size, SetSize] = useState("");
   const [count, setCount] = useState(1);
   const decrement = () => {
@@ -122,7 +122,7 @@ const ProductLanding = () => {
                     <FaLessThan />
                   </button>
                 </div>
-                <div className="aspect-h-1 aspect-w-1 w-4/5 h-4/5 rounded-md lg:aspect-none group-hover:opacity-75 lg:h-80 shadow-lg ">
+                <div className="aspect-h-1 aspect-w-1 w-4/5 h-7/8 rounded-md lg:aspect-none group-hover:opacity-75 lg:h-80 shadow-lg ">
                   <img
                     src={
                       thumbNailImage !== undefined

@@ -10,7 +10,9 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { postOrderProducts } from "../order/orderAction";
 import { DeleteAddToCartList } from "../addToCart/addToCartSlice";
-const PaymentForm = ({ totalAmount }) => {
+import { toast } from "react-toastify";
+import { UpdateProducts } from "../../helper/productAxios/productAxios";
+const PaymentForm = ({ totalAmount, paymentBy }) => {
   const stripe = useStripe();
   const dispatch = useDispatch();
   const elements = useElements();
@@ -38,53 +40,68 @@ const PaymentForm = ({ totalAmount }) => {
 
   const handelOnSubmit = async (e) => {
     e.preventDefault();
-    if (
-      !stripe ||
-      !elements.getElement(AddressElement) ||
-      !elements.getElement(CardElement)
-    ) {
-      return alert("Please Enter Address and Card details ");
+    if (!stripe || !elements.getElement(AddressElement)) {
+      return toast.error("Please Enter Address and Card details ");
     }
     setLoading(true);
-    const data = await fetchPaymentIntent({
-      amount: totalAmount,
-      currency: "aud",
-      payment_method_type: "card",
-    });
 
     const addressElement = elements.getElement(AddressElement);
-
     const { value } = await addressElement.getValue();
     const updateForm = { ...form, ...value };
-
     setForm(updateForm);
 
-    const { paymentIntent } = await stripe.confirmCardPayment(
-      data?.clientSecret,
+    // payment by Card
+    if (paymentBy === "card") {
+      const data = await fetchPaymentIntent({
+        amount: totalAmount,
+        currency: "aud",
+        payment_method_type: "card",
+      });
 
-      {
-        payment_method: {
-          card: elements.getElement(CardElement),
-          billing_details: updateForm,
-        },
+      const { paymentIntent } = await stripe.confirmCardPayment(
+        data?.clientSecret,
+        {
+          payment_method: {
+            card: elements.getElement(CardElement),
+            billing_details: updateForm,
+          },
+        }
+      );
+
+      if (paymentIntent.status === "succeeded" && paymentBy === "card") {
+        dispatch(
+          postOrderProducts({
+            userId: user._id || "",
+            dispatchedQty: 0,
+            items: addToCartList,
+            address: updateForm,
+            pay: paymentIntent,
+            amount: totalAmount,
+          })
+        );
       }
-    );
-
-    if (paymentIntent.status === "succeeded") {
+      await UpdateProducts({ items: addToCartList });
+      dispatch(DeleteAddToCartList(addToCartList.length));
+      setLoading(false);
+      console.log(loading);
+      return (
+        navigate("/orders") && alert("Items has been ordered successfully")
+      );
+    }
+    if (paymentBy === "cash") {
       dispatch(
         postOrderProducts({
           userId: user._id || "",
           dispatchedQty: 0,
           items: addToCartList,
           address: updateForm,
-          pay: paymentIntent,
+          pay: "cash",
           amount: totalAmount,
         })
       );
 
-      dispatch(DeleteAddToCartList(addToCartList.length));
       setLoading(false);
-      console.log(loading);
+      dispatch(DeleteAddToCartList(addToCartList.length));
       return (
         navigate("/orders") && alert("Items has been ordered successfully")
       );
@@ -95,7 +112,7 @@ const PaymentForm = ({ totalAmount }) => {
   };
 
   return (
-    <div className="font-medium m-4">
+    <div className="font-medium">
       {totalAmount <= 0 && (
         <div className="flex justify-center items-center p-2 m-auto border-2 bg-red-400">
           Please add Items in cart first
@@ -148,10 +165,12 @@ const PaymentForm = ({ totalAmount }) => {
                   onChange={handelOnChange}
                 />
               </div>
-              <div className=" border-2 p-4 mt-4">
-                Card:
-                <CardElement options={{ hidePostalCode: true }} required />
-              </div>
+              {paymentBy === "card" && (
+                <div className=" border-2 p-4 mt-4">
+                  Card:
+                  <CardElement options={{ hidePostalCode: true }} required />
+                </div>
+              )}
 
               <div
                 className={

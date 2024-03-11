@@ -14,7 +14,6 @@ export const getRefreshJWT = () => {
 }
 
 export const axiosProcesserAPI = async ({ method, url, refreshToken, ...rest }) => {
-    console.log("processer", rest)
     try {
         const token = refreshToken ? getRefreshJWT() : getAccessJWT()
         const headers = {

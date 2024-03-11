@@ -14,7 +14,6 @@ const dispatch = useDispatch()
   const navigate = useNavigate();
 
   const location = useLocation();
-  console.log(location);
   const fromLocation = location.state?.from?.location?.pathname || "/signIn";
 
   const handelOnSubmit = async (e) => {

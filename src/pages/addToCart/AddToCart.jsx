@@ -48,7 +48,10 @@ const AddToCart = () => {
       {newcart.length > 0 && (
         <div className="m-7">
           <div className="flex mt-10 justify-center text-2xl font-medium">
-            {newcart.length} Items in your Cart
+            {newcart.reduce((acc, { orderQty }) => {
+              return acc + orderQty;
+            }, 0)}{" "}
+            Items in your Cart
           </div>
           <div className="block md:flex  justify-center  w-full mt-6">
             <div className="block md:w-1/2  border-black border-2 mx-0 h-fit">
@@ -106,10 +109,8 @@ const AddToCart = () => {
                                 </div>
                               </div>
                             </div>
-                            <div className="blcok md:flex justify-between items-center mt-2">
-                              <div className="font-medium">
-                                Price/Item: ${price}
-                              </div>
+                            <div className="blcok md:flex justify-between items-center mt-2 overflow-auto">
+                              <div className="font-medium ">${price}</div>
                               <div className="">Size: {size}</div>
                             </div>
                           </div>

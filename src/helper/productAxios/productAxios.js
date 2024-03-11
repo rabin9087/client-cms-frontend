@@ -16,3 +16,11 @@ export const fetchAllProductsByCatID = (_id) => {
         data: _id
     })
 }
+
+export const UpdateProducts = (data) => {
+    return axiosProcesserAPI({
+        method: 'patch',
+        url: productAPI,
+        data
+    })
+}
