@@ -112,7 +112,6 @@ const Header = ({ products, setProducts }) => {
               <div className="flex relative">
                 {addToCartList?.length > 0 && (
                   <span className="text-md shadow-lg rounded-full px-3 bg-red-500 p-1">
-                    {/* {addToCartList?.length} */}
                     {addToCartList.reduce((acc, { orderQty }) => {
                       return acc + orderQty;
                     }, 0)}

@@ -40,7 +40,7 @@ const Pads = ({ product }) => {
                     <Link to={`/product/${slug}`}>
                       {/* <Link to={`#`}> */}
                       <img
-                        src={import.meta.env.VITE_SERVER_ROOT + thumbnail}
+                        src={thumbnail}
                         alt={name}
                         className="p-2 object-center w-full h-full lg:h-full lg:w-full "
                       />

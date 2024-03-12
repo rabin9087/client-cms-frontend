@@ -105,7 +105,7 @@ const ProductLanding = () => {
             >
               <button onClick={() => setThumbnailImage(item)}>
                 <img
-                  src={import.meta.env.VITE_SERVER_ROOT + item}
+                  src={item}
                   alt={product.name}
                   className="p-2 object-center w-20 h-28"
                 />
@@ -126,8 +126,8 @@ const ProductLanding = () => {
                   <img
                     src={
                       thumbNailImage !== undefined
-                        ? import.meta.env.VITE_SERVER_ROOT + thumbNailImage
-                        : import.meta.env.VITE_SERVER_ROOT + product.thumbnail
+                        ? thumbNailImage
+                        : product.thumbnail
                     }
                     alt={product.slug}
                     className="productLangingImg p-2 object-center w-full h-full lg:h-full lg:w-full"
