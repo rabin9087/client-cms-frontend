@@ -1,11 +1,12 @@
+import { useSelector } from "react-redux";
 
 const OrderItems = () => {
+  const { order } = useSelector((state) => state.orderInfo);
+  console.log(order);
+  // const order = JSON.parse(localStorage.getItem("orders"));
 
-  // const { order } = useSelector((state) => state.orderInfo);
-  const orders = JSON.parse(localStorage.getItem("orders"));
+  const { address, items } = order;
 
-  const { address, items } = orders;
- 
   return (
     <div className="m-5 mt-4 ">
       <h3 className="text-center py-4 text-lg font-bold underline">
@@ -98,7 +99,7 @@ const OrderItems = () => {
                 className="px-6 text-lg py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
               >
                 $
-                {items.reduce((acc, { price, orderQty }) => {
+                {items?.reduce((acc, { price, orderQty }) => {
                   return acc + price * orderQty;
                 }, 0)}
               </td>

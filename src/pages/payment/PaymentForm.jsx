@@ -79,14 +79,13 @@ const PaymentForm = ({ totalAmount, paymentBy }) => {
             amount: totalAmount,
           })
         );
+        await UpdateProducts({ items: addToCartList });
+        dispatch(DeleteAddToCartList(addToCartList.length));
+        setLoading(false);
+        return (
+          navigate("/orders") && alert("Items has been ordered successfully")
+        );
       }
-      await UpdateProducts({ items: addToCartList });
-      dispatch(DeleteAddToCartList(addToCartList.length));
-      setLoading(false);
-      console.log(loading);
-      return (
-        navigate("/orders") && alert("Items has been ordered successfully")
-      );
     }
     if (paymentBy === "cash") {
       dispatch(
@@ -99,9 +98,9 @@ const PaymentForm = ({ totalAmount, paymentBy }) => {
           amount: totalAmount,
         })
       );
-
-      setLoading(false);
+      await UpdateProducts({ items: addToCartList });
       dispatch(DeleteAddToCartList(addToCartList.length));
+      setLoading(false);
       return (
         navigate("/orders") && alert("Items has been ordered successfully")
       );
