@@ -15,8 +15,11 @@ const Home = () => {
   return (
     <UserLayout title={""} products={products} setProducts={setProducts}>
       <div>
-        <h1 className="text-center py-2 text-3xl font-bold">Home Page</h1>
-        <CustomeCarosel />
+        {/* <h1 className="text-center py-2 text-3xl font-bold">Home Page</h1> */}
+        <div className="mx-4">
+          <CustomeCarosel />
+        </div>
+
         <div className="flex justify-center">
           <Products products={products} />
         </div>

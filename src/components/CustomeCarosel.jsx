@@ -1,60 +1,58 @@
-import { TECarousel, TECarouselItem } from "tw-elements-react";
+import shoes from "../assets/images/shoes.png";
+import machine from "../assets/images/machine.png";
+import bat from "../assets/images/bat.png";
+import { FaChevronLeft } from "react-icons/fa";
+import { FaChevronRight } from "react-icons/fa";
+import { useState } from "react";
 
 const CustomeCarosel = () => {
+  const slides = [shoes, machine, bat];
+  const [current, setCurrent] = useState(0);
+  console.log(slides);
+  const previousSlide = () => {
+    if (current === 0) {
+      setCurrent(slides.length - 1);
+    } else {
+      setCurrent(current - 1);
+    }
+  };
+
+  const nextSlide = () => {
+    if (current === slides.length - 1) {
+      setCurrent(0);
+    } else {
+      setCurrent(current + 1);
+    }
+  };
+
   return (
-    <div>
-      <TECarousel showControls showIndicators ride="carousel">
-        <div className="relative w-full overflow-hidden after:clear-both after:block after:content-['']">
-          <TECarouselItem
-            itemID={1}
-            className="relative float-left -mr-[100%] hidden w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
-          >
-            <img
-              src="https://tecdn.b-cdn.net/img/Photos/Slides/img%20(15).jpg"
-              className="block w-full"
-              alt="..."
-            />
-            <div className="absolute inset-x-[15%] bottom-5 hidden py-5 text-center text-white md:block">
-              <h5 className="text-xl">First slide label</h5>
-              <p>
-                Some representative placeholder content for the first slide.
-              </p>
-            </div>
-          </TECarouselItem>
-          <TECarouselItem
-            itemID={2}
-            className="relative float-left hidden -mr-[100%] w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
-          >
-            <img
-              src="https://tecdn.b-cdn.net/img/Photos/Slides/img%20(22).jpg"
-              className="block w-full"
-              alt="..."
-            />
-            <div className="absolute inset-x-[15%] bottom-5 hidden py-5 text-center text-white md:block">
-              <h5 className="text-xl">Second slide label</h5>
-              <p>
-                Some representative placeholder content for the second slide.
-              </p>
-            </div>
-          </TECarouselItem>
-          <TECarouselItem
-            itemID={3}
-            className="relative float-left -mr-[100%] hidden w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
-          >
-            <img
-              src="https://tecdn.b-cdn.net/img/Photos/Slides/img%20(23).jpg"
-              className="block w-full"
-              alt="..."
-            />
-            <div className="absolute inset-x-[15%] bottom-5 hidden py-5 text-center text-white md:block">
-              <h5 className="text-xl">Third slide label</h5>
-              <p>
-                Some representative placeholder content for the third slide.
-              </p>
-            </div>
-          </TECarouselItem>
-        </div>
-      </TECarousel>
+    <div className="overflow-hidden relative">
+      <div
+        className={`flex transition ease-out duration-100 ]`}
+        style={{ transform: `translateX(-${current * 100}%)` }}
+      >
+        {slides?.map((s) => {
+          return <img key={s} src={s} alt="Image" />;
+        })}
+      </div>
+      <div className="absolute top-0 h-full w-full flex justify-between items-center px-10 text-2xl font-bold">
+        <button className="" onClick={previousSlide}>
+          <FaChevronLeft />
+        </button>
+        <button onClick={nextSlide}>
+          <FaChevronRight />
+        </button>
+      </div>
+      <div className="absolute bottom-0 py-4 flex justify-center gap-6 w-full">
+        {slides.map((s, i) => (
+          <div
+            key={"circle" + i}
+            className={`rounded-full w-3 h-3 md:w-5 md:h-5 ${(i = current
+              ? "bg-white"
+              : "bg-gray-300")} `}
+          ></div>
+        ))}
+      </div>
     </div>
   );
 };

@@ -7,19 +7,15 @@ import Rating from "./Rating";
 import { setAddToCartList } from "../pages/addToCart/addToCartSlice";
 import { FaLessThan } from "react-icons/fa6";
 import { FaGreaterThan } from "react-icons/fa6";
-import { createAddToCartAction } from "../pages/addToCart/addToCartAction";
 
 const ProductLanding = () => {
   const { slug } = useParams();
   const dispatch = useDispatch();
   const [thumbNailImage, setThumbnailImage] = useState();
   const { addToCartList } = useSelector((state) => state.addToCartInfo);
-  const { user } = useSelector((state) => state.userInfo);
-  const [cartList, setCarList] = useState(addToCartList);
   localStorage.setItem("addToCartList", JSON.stringify(addToCartList));
 
   const { product } = useSelector((state) => state.productInfo);
-  const [carts, setCats] = useState(addToCartList);
 
   const [size, SetSize] = useState("");
   const [count, setCount] = useState(1);
@@ -47,31 +43,6 @@ const ProductLanding = () => {
       if (size != "") {
         const updateProduct = { ...product, orderQty: count, size };
         dispatch(setAddToCartList(updateProduct));
-        // if (user?._id) {
-        //   const filter = cartList.filter(
-        //     (item) =>
-        //       item?._id === updateProduct?._id &&
-        //       item?.size === updateProduct?.size
-        //   );
-
-        //   if (filter.length > 0) {
-        //     cartList.filter(
-        //       (item) => item?._id === updateProduct?._id
-        //     )[0].orderQty = updateProduct.orderQty;
-        //   } else {
-        //     setCarList([...cartList, updateProduct]);
-        //   }
-        //   console.log(cartList);
-        //   dispatch(
-        //     createAddToCartAction({
-        //       user: user._id,
-        //       items: cartList,
-        //       cartStatus: "pending",
-        //     })
-        //   );
-        // } else {
-        //   dispatch(setAddToCartList(updateProduct));
-        // }
       } else {
         alert("Please select size");
       }
@@ -91,7 +62,7 @@ const ProductLanding = () => {
 
   useEffect(() => {
     dispatch(fetchAProduct(slug));
-    setCats(addToCartList);
+    // setCats(addToCartList);
   }, [slug, dispatch, addToCartList]);
 
   return (
