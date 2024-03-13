@@ -72,9 +72,7 @@ const AddToCart = () => {
                               <img
                                 width={"80px"}
                                 height={"100px"}
-                                src={
-                                  import.meta.env.VITE_SERVER_ROOT + thumbnail
-                                }
+                                src={thumbnail}
                                 className="p-2 object-center"
                               />
                             </div>

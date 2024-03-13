@@ -19,7 +19,6 @@ import Payment from "./pages/payment/Payment";
 import Orders from "./pages/order/Orders";
 import SignUp from "./pages/sign-in-up/SignUp";
 import { fetchUserProfile } from "./pages/sign-in-up/userAction";
-import { fetchAllCartList } from "./pages/addToCart/addToCartAction";
 
 function App() {
   const dispatch = useDispatch();
@@ -29,7 +28,6 @@ function App() {
   const { user } = useSelector((state) => state.userInfo);
   localStorage.setItem("addToCartList", JSON.stringify(addToCartList));
   useEffect(() => {
-    
     dispatch(fetchUserProfile());
     dispatch(getAllCategoriesAction());
     dispatch(fetchAllProducts());
