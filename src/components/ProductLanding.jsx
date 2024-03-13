@@ -97,17 +97,17 @@ const ProductLanding = () => {
   return (
     <UserLayout>
       <div className="block md:flex min-h-[73vh] justify-center gap-4 p-6">
-        <div className="hidden md:grid grid-rows-3 gap-1 h-96 w-40 ">
+        <div className="hidden md:grid grid-rows-4 gap-4 h-96 w-40 m-2">
           {product.images?.map((item, i) => (
             <div
               key={i}
-              className="flex justify-center w-full h-28 rounded-md group-hover:opacity-75 hover:opacity-75 shadow-lg"
+              className="flex m-2 justify-center w-full h-32 rounded-md group-hover:opacity-75 hover:opacity-75 shadow-lg"
             >
               <button onClick={() => setThumbnailImage(item)}>
                 <img
                   src={item}
                   alt={product.name}
-                  className="p-2 object-center w-20 h-28"
+                  className="object-center w-full h-full lg:h-full lg:w-full"
                 />
               </button>
             </div>

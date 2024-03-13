@@ -4,7 +4,7 @@ import { fetchProductsById } from "../products/productAction";
 import { Link } from "react-router-dom";
 import UserLayout from "../layout/UserLayout";
 
-const Pads = ({ product }) => {
+const Balls = ({ product }) => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
 
@@ -22,7 +22,7 @@ const Pads = ({ product }) => {
         <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8 flex flex-col justify-start gap-5">
           <div>
             <h2 className="text-2xl font-bold tracking-tight text-gray-900">
-              Pads
+              Balls
             </h2>
             {loading && (
               <div className="spinner justify-center items-center m-auto"></div>
@@ -65,4 +65,4 @@ const Pads = ({ product }) => {
   );
 };
 
-export default Pads;
+export default Balls;

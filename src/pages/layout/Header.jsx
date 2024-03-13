@@ -38,12 +38,11 @@ const Header = ({ products, setProducts }) => {
   };
 
   const navItems = [
-    { navbar: "Home", url: "/", Icon: IoHomeSharp },
-    { navbar: "Bats", url: "/bats", Icon: GiCricketBat },
-    { navbar: "Shoes", url: "/shoes", Icon: GiRunningShoe },
-    { navbar: "Gloves", url: "/gloves", Icon: GiWinterGloves },
-    { navbar: "Pads", url: "/pads", Icon: IoHomeSharp },
+    { navbar: "Bats", url: "/bats", Icon: IoHomeSharp },
+    // { navbar: "Protection", url: "/protection", Icon: GiCricketBat },
     { navbar: "Cloths", url: "/cloths", Icon: GiClothes },
+    { navbar: "Shoes", url: "/shoes", Icon: GiRunningShoe },
+    { navbar: "Balls", url: "/balls", Icon: IoHomeSharp },
     { navbar: "Trending", url: "/trending", Icon: HiTrendingUp },
   ];
 
