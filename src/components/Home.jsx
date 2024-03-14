@@ -11,6 +11,10 @@ const Home = () => {
   const [products, setProducts] = useState(productList);
   const { carouselImage } = useSelector((state) => state.productInfo);
 
+  const handeOnImageClick = () => {
+    console.log("Hello");
+  };
+
   useEffect(() => {
     dispatch(fetchAllCarouselAction());
     setProducts(productList);
@@ -20,7 +24,9 @@ const Home = () => {
     <UserLayout title={""} products={products} setProducts={setProducts}>
       <div>
         <div className="">
-          <CustomeCarosel carouselImage={carouselImage} />
+          <button onClick={() => handeOnImageClick()}>
+            <CustomeCarosel carouselImage={carouselImage} />
+          </button>
         </div>
 
         <div className="flex justify-center">

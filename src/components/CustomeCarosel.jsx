@@ -63,7 +63,7 @@ const CustomeCarosel = ({ carouselImage }) => {
           return <img key={i} src={s} alt="Image" height={"100vh"} />;
         })}
       </div>
-      <div className="absolute top-0 h-full w-full flex justify-between items-center px-10 text-2xl font-bold">
+      <div className=" absolute top-0 h-full w-full flex justify-between items-center px-2 md:px-10 text-2xl font-bold">
         <button className="" onClick={previousSlide}>
           {carouselImage.length === 1 ? "" : <FaChevronLeft />}
         </button>

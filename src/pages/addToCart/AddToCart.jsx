@@ -53,8 +53,8 @@ const AddToCart = () => {
             }, 0)}{" "}
             Items in your Cart
           </div>
-          <div className="block md:flex  justify-center  w-full mt-6">
-            <div className="block md:w-1/2  border-black border-2 mx-0 h-fit">
+          <div className="block md:flex  justify-center  w-full mt-6 ">
+            <div className="block md:w-1/2 border-black border-2 mx-0 h-fit ">
               {newcart.map(
                 (
                   { _id, thumbnail, name, orderQty, price, slug, qty, size },
@@ -64,52 +64,52 @@ const AddToCart = () => {
                     {_id !== "" && (
                       <div
                         key={_id}
-                        className=" flex gap-2 items-center px-2 py-3 md:p-6 border-b-2"
+                        className=" flex gap-2 items-center px-2 py-3 md:p-6 border-b-2 "
                       >
-                        <div className="w-3/4 flex gap-2 items-center">
+                        <div>
                           <Link to={`/product/${slug}`}>
-                            <div className="flex justify-center items-center shadow-lg border-2 w-16 h-24 md:w-24 md:h-32">
+                            <div className="flex justify-center items-center border-2 w-20 h-24 md:w-24 md:h-32">
                               <img
-                                width={"80px"}
+                                width={"100px"}
                                 height={"100px"}
                                 src={thumbnail}
-                                className="p-2 object-center"
+                                className=" object-center"
                               />
                             </div>
                           </Link>
-                          <div className="ps-6 font-medium ">
+                        </div>
+                        <div className="w-3/4 flex gap-2 items-center ">
+                          <div className="ps-2 font-medium ">
                             <div className="flex">
                               <Link to={`/product/${slug}`}>
-                                <div className="hover:underline font-bold text-base">
+                                <div className="hover:underline font-medium text-base">
                                   {name}
                                 </div>
                               </Link>
                             </div>
-                            <div className="block sm:flex gap-3 mt-2 xl:text-xl text-sm">
-                              <span className="block">QTY </span>
-                              <div className="block lg:flex justify-center w-fit items-center gap-4 ">
-                                <div className="justify-center items-center ms:mt-0 border-gray-100 border-2 ">
-                                  <button
-                                    onClick={() => decrement(orderQty, i)}
-                                    type="button"
-                                    className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 font-medium text-xl md:px-6 px-2 me-2  md:me-6 dark:bg-gray-600/35 dark:hover:bg-blue-700"
-                                  >
-                                    -
-                                  </button>
-                                  <span className="w-30px">{orderQty}</span>
-                                  <button
-                                    onClick={() => increment(qty, orderQty, i)}
-                                    type="button"
-                                    className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 font-medium text-xl md:px-6 px-2 ms-2  md:ms-6 dark:bg-gray-600/35 dark:hover:bg-blue-700"
-                                  >
-                                    +
-                                  </button>
-                                </div>
+                            <div className="block md:flex justify-between items-center my-2 overflow-auto">
+                              <div className="font-medium text-red-500">
+                                ${price}.00
                               </div>
-                            </div>
-                            <div className="blcok md:flex justify-between items-center mt-2 overflow-auto">
-                              <div className="font-medium ">${price}</div>
                               <div className="">Size: {size}</div>
+                            </div>
+
+                            <div className="flex justify-between items-center ms:mt-2 gap-1 border-gray-100 border-2 w-fit ">
+                              <button
+                                onClick={() => decrement(orderQty, i)}
+                                type="button"
+                                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 font-medium text-xl md:px-6 px-3 me-2  md:me-6 dark:bg-gray-600/35 dark:hover:bg-blue-700"
+                              >
+                                -
+                              </button>
+                              <span className="w-30px">{orderQty}</span>
+                              <button
+                                onClick={() => increment(qty, orderQty, i)}
+                                type="button"
+                                className=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 font-medium text-xl md:px-6 px-3 ms-2 md:ms-6 dark:bg-gray-600/35 dark:hover:bg-blue-700"
+                              >
+                                +
+                              </button>
                             </div>
                           </div>
                         </div>

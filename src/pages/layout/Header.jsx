@@ -47,9 +47,8 @@ const Header = ({ products, setProducts }) => {
 
   return (
     <>
-      <div className={"shadow-lg w-full fixed top-0 z-10"}>
-        <div className="flex w-full gap-2 p-7 justify-between items-center bg-blue-400">
-          {/* mobile menu */}
+      <div className={"shadow-lg w-full fixed top-0 z-10 bg-blue-400 pb-2"}>
+        <div className="flex w-full gap-1 p-4 md:p-7 justify-between items-center ">
           <div className="xl:hidden">
             <div className="menu">
               <span>
@@ -177,6 +176,16 @@ const Header = ({ products, setProducts }) => {
             </div>
           </div>
         </div>
+        <div className="block sm:hidden w-full px-6">
+          <div className="w-full ">
+            <CustomeInput
+              placeholder={"Search a Product"}
+              products={products}
+              setProducts={setProducts}
+              handelOnSearch={handelOnSearch}
+            />
+          </div>
+        </div>
         {showMenu && (
           <div className="mobileMenu gap-6 text-white w-full sm:w-1/5 h-full  bg-black">
             <span className="block text-lg text-center">
@@ -195,16 +204,6 @@ const Header = ({ products, setProducts }) => {
       </div>
 
       {/* mobile search bar */}
-      <div className="block mt-4 sm:hidden w-full px-4  ">
-        <div className="w-full ">
-          <CustomeInput
-            placeholder={"Search a Product"}
-            products={products}
-            setProducts={setProducts}
-            handelOnSearch={handelOnSearch}
-          />
-        </div>
-      </div>
     </>
   );
 };

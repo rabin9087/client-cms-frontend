@@ -57,7 +57,7 @@ const ProductLanding = () => {
 
   return (
     <UserLayout>
-      <div className="block md:flex min-h-[73vh] justify-center gap-4 p-6">
+      <div className="block md:flex min-h-[73vh] justify-center gap-4 p-4">
         <div
           className={`hidden md:grid grid-rows-${
             carouselImage?.length - 1
@@ -82,7 +82,7 @@ const ProductLanding = () => {
           <div className="block lg:flex h-full">
             <div className="grid grid-cols-1 justify-center gap-6 sm:grid-cols-2 lg:grid-cols-2 xl:gap-8 bg-gray-100 shadow-lg lg:w-2/3">
               <div className="flex bg-white h-full w-full justify-center items-center">
-                <div className="aspect-h-1 aspect-w-1 w-4/5 h-7/8 rounded-md lg:aspect-none group-hover:opacity-75 lg:h-80 shadow-lg overflow-hidden relative">
+                <div className="aspect-h-1 aspect-w-1 md:w-4/5 md:h-7/8 rounded-md lg:aspect-none group-hover:opacity-75 lg:h-80 overflow-hidden relative">
                   {/* <CustomeCarosel carouselImage={carouselImage} /> */}
                   <div className="hidden md:flex">
                     <img
@@ -95,7 +95,7 @@ const ProductLanding = () => {
                       className="productLangingImg p-2 object-center w-full h-full lg:h-full lg:w-full"
                     />
                   </div>
-                  <div className="block md:hidden ">
+                  <div className="block md:hidden">
                     <CustomeCarosel carouselImage={carouselImage} />
                   </div>
                 </div>
@@ -118,7 +118,7 @@ const ProductLanding = () => {
                     Size
                   </label>
                   <select
-                    className="py-1 px-2.5 rounded-md mt-2 font-medium md:text-xl text-sm"
+                    className="w-2/3 py-2 px-2.5 rounded-md mt-2 font-medium md:text-xl text-sm"
                     value={size}
                     onChange={handelOnSize}
                   >
@@ -134,7 +134,7 @@ const ProductLanding = () => {
                   </select>
                   <div className="block mt-6 xl:text-xl text-sm">
                     <span className="block">QTY </span>
-                    <div className="block 2xl:flex justify-center w-full items-center gap-4 ">
+                    <div className="block 2xl:flex justify-between w-full items-center gap-4 ">
                       <div className="flex text-center items-center mt-2 border-gray-100 border-2 box-content w-1/2">
                         <button
                           onClick={decrement}
@@ -152,8 +152,11 @@ const ProductLanding = () => {
                           +
                         </button>
                       </div>
-                      <div className="mt-4 mb-2 lg:text-xl text-white bg-blue-700 hover:bg-green-800 focus:ring-4 font-medium text-sm lg:px-1 px-4 py-1.5 sm:py-2.5 dark:bg-blue-500 dark:hover:bg-green-500 max-w-fit">
-                        <button className="lg:mx-2" onClick={itemAddToCart}>
+                      <div className=" w-full  mt-4 mb-2 text-center lg:text-xl text-white bg-blue-700 hover:bg-green-800 focus:ring-4 font-medium text-sm lg:px-1 px-4 py-1.5 sm:py-2.5 dark:bg-blue-500 dark:hover:bg-green-500">
+                        <button
+                          className="lg:mx-2 text-center"
+                          onClick={itemAddToCart}
+                        >
                           Add to cart
                         </button>
                       </div>
