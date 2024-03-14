@@ -5,9 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import UserLayout from "../pages/layout/UserLayout";
 import Rating from "./Rating";
 import { setAddToCartList } from "../pages/addToCart/addToCartSlice";
-import { FaLessThan } from "react-icons/fa6";
-import { FaGreaterThan } from "react-icons/fa6";
 import CustomeCarosel from "./CustomeCarosel";
+import YouMayLike from "../pages/youMayLike/YouMayLike";
 
 const ProductLanding = () => {
   const { slug } = useParams();
@@ -51,17 +50,6 @@ const ProductLanding = () => {
     }
   };
 
-  const handelonSlide = (i) => {
-    if (product?.length) {
-      product?.image.map((item) => {
-        for (let i = 0; i <= product?.image.length; i++) {
-          setThumbnailImage(thumbNailImage.push(item(i)));
-        }
-      });
-      setThumbnailImage([i]);
-    }
-  };
-
   useEffect(() => {
     dispatch(fetchAProduct(slug));
     // setCats(addToCartList);
@@ -72,15 +60,15 @@ const ProductLanding = () => {
       <div className="block md:flex min-h-[73vh] justify-center gap-4 p-6">
         <div
           className={`hidden md:grid grid-rows-${
-            carouselImage.length - 2
-          } gap-4 h-96 w-40 m-2`}
+            carouselImage?.length - 1
+          } gap-4 max-h-full w-40 m-2 overflow-y-auto`}
         >
           {carouselImage?.map((item, i) => (
             <div
               key={i}
               className="flex m-2 justify-center w-full h-32 rounded-md group-hover:opacity-75 hover:opacity-75 shadow-lg overflow-auto "
             >
-              <button onClick={() => setThumbnailImage(carouselImage[i])}>
+              <button onClick={() => setThumbnailImage(item)}>
                 <img
                   src={item}
                   alt={product.name}
@@ -95,17 +83,21 @@ const ProductLanding = () => {
             <div className="grid grid-cols-1 justify-center gap-6 sm:grid-cols-2 lg:grid-cols-2 xl:gap-8 bg-gray-100 shadow-lg lg:w-2/3">
               <div className="flex bg-white h-full w-full justify-center items-center">
                 <div className="aspect-h-1 aspect-w-1 w-4/5 h-7/8 rounded-md lg:aspect-none group-hover:opacity-75 lg:h-80 shadow-lg overflow-hidden relative">
-                  <CustomeCarosel carouselImage={carouselImage} />
-
-                  {/* <img
-                    src={
-                      thumbNailImage !== undefined
-                        ? thumbNailImage
-                        : product.thumbnail
-                    }
-                    alt={product.slug}
-                    className="productLangingImg p-2 object-center w-full h-full lg:h-full lg:w-full"
-                  /> */}
+                  {/* <CustomeCarosel carouselImage={carouselImage} /> */}
+                  <div className="hidden md:flex">
+                    <img
+                      src={
+                        thumbNailImage !== undefined
+                          ? thumbNailImage
+                          : product.thumbnail
+                      }
+                      alt={product.slug}
+                      className="productLangingImg p-2 object-center w-full h-full lg:h-full lg:w-full"
+                    />
+                  </div>
+                  <div className="block md:hidden ">
+                    <CustomeCarosel carouselImage={carouselImage} />
+                  </div>
                 </div>
               </div>
               <div className="mt-6 sm:mt-0">
@@ -177,10 +169,14 @@ const ProductLanding = () => {
               </div>
             </div>
             <div className="lg:w-1/2 mx-6 mt-3 text-justify md:text-xl">
-              Description: {product.description}
+              <span className="block text-2xl font-bold">Description </span>
+              <br /> {product.description}
             </div>
           </div>
         </div>
+      </div>
+      <div>
+        <YouMayLike slug={slug} />
       </div>
     </UserLayout>
   );

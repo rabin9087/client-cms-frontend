@@ -1,5 +1,6 @@
-import { fetchAllProductsByCatID, fetchProducts, fetchProductsbySlug } from "../../helper/productAxios/productAxios"
-import { SetAProduct, SetProductsByCatId, setCarouselImage, setProductList } from "./productSlice"
+import { fetchAllProductsByCatID, fetchProducts, fetchProductsForYouMayLikebySlug, fetchProductsbySlug } from "../../helper/productAxios/productAxios"
+import { setYouMayLikeProductList } from "../youMayLike/youMayLikeSlice"
+import { SetAProduct, SetProductsByCatId, setCarouselImage, setComponentProductList, setProductList } from "./productSlice"
 
 export const fetchAllProducts = () => async (dispatch) => {
     const { status, products } = await fetchProducts()
@@ -19,7 +20,14 @@ export const fetchAProduct = (slug) => async (dispatch) => {
 export const fetchAllProductByslug = (slug) => async (dispatch) => {
     const { status, products } = await fetchProductsbySlug(slug)
     if (status === "success") {
-        dispatch(setProductList(products))
+        dispatch(setComponentProductList(products))
+    }
+}
+
+export const fetchAllProductForYouMayLikByslugAction = (slug) => async (dispatch) => {
+    const { status, products } = await fetchProductsForYouMayLikebySlug(slug)
+    if (status === "success") {
+        dispatch(setYouMayLikeProductList(products))
     }
 }
 

@@ -19,7 +19,6 @@ const Home = () => {
   return (
     <UserLayout title={""} products={products} setProducts={setProducts}>
       <div>
-        {/* <h1 className="text-center py-2 text-3xl font-bold">Home Page</h1> */}
         <div className="">
           <CustomeCarosel carouselImage={carouselImage} />
         </div>

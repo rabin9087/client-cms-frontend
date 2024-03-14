@@ -16,6 +16,13 @@ export const fetchProductsbySlug = (slug) => {
     })
 }
 
+export const fetchProductsForYouMayLikebySlug = (slug) => {
+    return axiosProcesserAPI({
+        method: 'get',
+        url: productAPI + "/you-may-like/" + slug,
+    })
+}
+
 export const fetchAllProductsByCatID = (_id) => {
     return axiosProcesserAPI({
         method: 'get',

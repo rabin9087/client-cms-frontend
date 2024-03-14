@@ -4,6 +4,7 @@ import categoryReducer from "./pages/category/categorySlice";
 import orderReducer from "./pages/order/orderSlice";
 import addToCartReducer from "./pages/addToCart/addToCartSlice";
 import userReducer from "./pages/sign-in-up/userSlice";
+import youMayLikeReducer from "./pages/youMayLike/youMayLikeSlice";
 
 export default configureStore({
     reducer: {
@@ -11,6 +12,7 @@ export default configureStore({
         categoryInfo: categoryReducer,
         productInfo: productReducer,
         addToCartInfo: addToCartReducer,
-        orderInfo: orderReducer
+        orderInfo: orderReducer,
+        youMayLikeInfo: youMayLikeReducer,
     }
 })

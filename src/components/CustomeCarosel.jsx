@@ -8,6 +8,9 @@ const CustomeCarosel = ({ carouselImage }) => {
   const [current, setCurrent] = useState(0);
 
   const previousSlide = () => {
+    if (carouselImage.length === 1) {
+      return;
+    }
     if (current === 0) {
       setCurrent(carouselImage.length - 1);
     } else {
@@ -16,6 +19,9 @@ const CustomeCarosel = ({ carouselImage }) => {
   };
 
   const nextSlide = () => {
+    if (carouselImage.length === 1) {
+      return;
+    }
     if (current === carouselImage.length - 1) {
       setCurrent(0);
     } else {
@@ -24,6 +30,9 @@ const CustomeCarosel = ({ carouselImage }) => {
   };
 
   useEffect(() => {
+    if (carouselImage.length === 1) {
+      return;
+    }
     const interval = setInterval(() => {
       nextSlide();
     }, 5000);
@@ -42,7 +51,7 @@ const CustomeCarosel = ({ carouselImage }) => {
       clearInterval(interval);
       window.removeEventListener("wheel", handelSwipe);
     };
-  }, [dispatch, current]);
+  }, [dispatch, current, carouselImage.length]);
 
   return (
     <div className="overflow-hidden relative">
@@ -56,10 +65,10 @@ const CustomeCarosel = ({ carouselImage }) => {
       </div>
       <div className="absolute top-0 h-full w-full flex justify-between items-center px-10 text-2xl font-bold">
         <button className="" onClick={previousSlide}>
-          <FaChevronLeft />
+          {carouselImage.length === 1 ? "" : <FaChevronLeft />}
         </button>
         <button onClick={nextSlide}>
-          <FaChevronRight />
+          {carouselImage.length === 1 ? "" : <FaChevronRight />}
         </button>
       </div>
       <div className="absolute bottom-0 py-4 flex justify-center gap-6 w-full">

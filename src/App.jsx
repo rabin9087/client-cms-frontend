@@ -37,7 +37,7 @@ function App() {
         <Route path="/product/:slug" element={<ProductLanding />} />
         <Route path="/cart" element={<AddToCart />} />
         <Route path="/bats" element={<Bats />} />
-        <Route path="/potection" element={<Protection />} />
+        <Route path="/protection" element={<Protection />} />
         <Route path="/cloths" element={<Cloths />} />
         <Route path="/shoes" element={<Shoes />} />
         <Route path="/balls" element={<Balls />} />

@@ -5,6 +5,7 @@ const initialState = {
     product: {},
     productsByCatId: [],
     carouselImage: [],
+    componentProductList: []
 }
 
 const productSlice = createSlice({
@@ -22,10 +23,13 @@ const productSlice = createSlice({
         },
         setCarouselImage: (state, { payload }) => {
             state.carouselImage = payload
-        }
+        },
+        setComponentProductList: (state, { payload }) => {
+            state.componentProductList = payload
+        },
     }
 })
 
 const { actions, reducer } = productSlice
-export const { setProductList, SetAProduct, SetProductsByCatId, setCarouselImage } = actions
+export const { setProductList, SetAProduct, SetProductsByCatId, setCarouselImage, setComponentProductList } = actions
 export default reducer
