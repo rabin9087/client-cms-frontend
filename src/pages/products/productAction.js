@@ -1,5 +1,5 @@
-import { fetchAllProductsByCatID, fetchProducts } from "../../helper/productAxios/productAxios"
-import { SetAProduct, SetProductsByCatId, setProductList } from "./productSlice"
+import { fetchAllProductsByCatID, fetchProducts, fetchProductsbySlug } from "../../helper/productAxios/productAxios"
+import { SetAProduct, SetProductsByCatId, setCarouselImage, setProductList } from "./productSlice"
 
 export const fetchAllProducts = () => async (dispatch) => {
     const { status, products } = await fetchProducts()
@@ -12,6 +12,14 @@ export const fetchAProduct = (slug) => async (dispatch) => {
     const { status, products } = await fetchProducts(slug)
     if (status === "success") {
         dispatch(SetAProduct(products))
+        dispatch(setCarouselImage(products?.images))
+    }
+}
+
+export const fetchAllProductByslug = (slug) => async (dispatch) => {
+    const { status, products } = await fetchProductsbySlug(slug)
+    if (status === "success") {
+        dispatch(setProductList(products))
     }
 }
 

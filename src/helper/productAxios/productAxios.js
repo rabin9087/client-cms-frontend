@@ -9,6 +9,13 @@ export const fetchProducts = (slug) => {
     })
 }
 
+export const fetchProductsbySlug = (slug) => {
+    return axiosProcesserAPI({
+        method: 'get',
+        url: productAPI + "/slug/" + slug,
+    })
+}
+
 export const fetchAllProductsByCatID = (_id) => {
     return axiosProcesserAPI({
         method: 'get',

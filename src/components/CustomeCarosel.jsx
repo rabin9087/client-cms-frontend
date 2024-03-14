@@ -1,38 +1,57 @@
-import shoes from "../assets/images/shoes.png";
-import machine from "../assets/images/machine.png";
-import bat from "../assets/images/bat.png";
 import { FaChevronLeft } from "react-icons/fa";
 import { FaChevronRight } from "react-icons/fa";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
-const CustomeCarosel = () => {
-  const slides = [shoes, machine, bat];
+const CustomeCarosel = ({ carouselImage }) => {
+  const dispatch = useDispatch();
   const [current, setCurrent] = useState(0);
-  console.log(slides);
+
   const previousSlide = () => {
     if (current === 0) {
-      setCurrent(slides.length - 1);
+      setCurrent(carouselImage.length - 1);
     } else {
       setCurrent(current - 1);
     }
   };
 
   const nextSlide = () => {
-    if (current === slides.length - 1) {
+    if (current === carouselImage.length - 1) {
       setCurrent(0);
     } else {
       setCurrent(current + 1);
     }
   };
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      nextSlide();
+    }, 5000);
+
+    const handelSwipe = (e) => {
+      if (e.deltax > 0) {
+        nextSlide();
+      } else if (e.deltax < 0) {
+        previousSlide();
+      }
+    };
+
+    window.addEventListener("wheel", handelSwipe);
+
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener("wheel", handelSwipe);
+    };
+  }, [dispatch, current]);
+
   return (
     <div className="overflow-hidden relative">
       <div
-        className={`flex transition ease-out duration-100 ]`}
+        className={`flex transition ease-out duration-300 min-h-96`}
         style={{ transform: `translateX(-${current * 100}%)` }}
       >
-        {slides?.map((s) => {
-          return <img key={s} src={s} alt="Image" />;
+        {carouselImage?.map((s, i) => {
+          return <img key={i} src={s} alt="Image" height={"100vh"} />;
         })}
       </div>
       <div className="absolute top-0 h-full w-full flex justify-between items-center px-10 text-2xl font-bold">
@@ -44,13 +63,14 @@ const CustomeCarosel = () => {
         </button>
       </div>
       <div className="absolute bottom-0 py-4 flex justify-center gap-6 w-full">
-        {slides.map((s, i) => (
-          <div
-            key={"circle" + i}
-            className={`rounded-full w-3 h-3 md:w-5 md:h-5 ${(i = current
-              ? "bg-white"
-              : "bg-gray-300")} `}
-          ></div>
+        {carouselImage.map((s, i) => (
+          <button key={i} className="" onClick={() => setCurrent(i)}>
+            <div
+              className={`rounded-full w-3 h-3 md:w-5 md:h-5 bg-gray-300 ${
+                i === current ? "bg-white" : "bg-gray-600"
+              }`}
+            ></div>
+          </button>
         ))}
       </div>
     </div>

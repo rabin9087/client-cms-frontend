@@ -7,6 +7,7 @@ import Rating from "./Rating";
 import { setAddToCartList } from "../pages/addToCart/addToCartSlice";
 import { FaLessThan } from "react-icons/fa6";
 import { FaGreaterThan } from "react-icons/fa6";
+import CustomeCarosel from "./CustomeCarosel";
 
 const ProductLanding = () => {
   const { slug } = useParams();
@@ -16,6 +17,7 @@ const ProductLanding = () => {
   localStorage.setItem("addToCartList", JSON.stringify(addToCartList));
 
   const { product } = useSelector((state) => state.productInfo);
+  const { carouselImage } = useSelector((state) => state.productInfo);
 
   const [size, SetSize] = useState("");
   const [count, setCount] = useState(1);
@@ -68,13 +70,17 @@ const ProductLanding = () => {
   return (
     <UserLayout>
       <div className="block md:flex min-h-[73vh] justify-center gap-4 p-6">
-        <div className="hidden md:grid grid-rows-4 gap-4 h-96 w-40 m-2">
-          {product.images?.map((item, i) => (
+        <div
+          className={`hidden md:grid grid-rows-${
+            carouselImage.length - 2
+          } gap-4 h-96 w-40 m-2`}
+        >
+          {carouselImage?.map((item, i) => (
             <div
               key={i}
-              className="flex m-2 justify-center w-full h-32 rounded-md group-hover:opacity-75 hover:opacity-75 shadow-lg"
+              className="flex m-2 justify-center w-full h-32 rounded-md group-hover:opacity-75 hover:opacity-75 shadow-lg overflow-auto "
             >
-              <button onClick={() => setThumbnailImage(item)}>
+              <button onClick={() => setThumbnailImage(carouselImage[i])}>
                 <img
                   src={item}
                   alt={product.name}
@@ -88,13 +94,10 @@ const ProductLanding = () => {
           <div className="block lg:flex h-full">
             <div className="grid grid-cols-1 justify-center gap-6 sm:grid-cols-2 lg:grid-cols-2 xl:gap-8 bg-gray-100 shadow-lg lg:w-2/3">
               <div className="flex bg-white h-full w-full justify-center items-center">
-                <div className="sm:hidden">
-                  <button className="px-2" onClick={(i) => handelonSlide(i--)}>
-                    <FaLessThan />
-                  </button>
-                </div>
-                <div className="aspect-h-1 aspect-w-1 w-4/5 h-7/8 rounded-md lg:aspect-none group-hover:opacity-75 lg:h-80 shadow-lg ">
-                  <img
+                <div className="aspect-h-1 aspect-w-1 w-4/5 h-7/8 rounded-md lg:aspect-none group-hover:opacity-75 lg:h-80 shadow-lg overflow-hidden relative">
+                  <CustomeCarosel carouselImage={carouselImage} />
+
+                  {/* <img
                     src={
                       thumbNailImage !== undefined
                         ? thumbNailImage
@@ -102,12 +105,7 @@ const ProductLanding = () => {
                     }
                     alt={product.slug}
                     className="productLangingImg p-2 object-center w-full h-full lg:h-full lg:w-full"
-                  />
-                </div>
-                <div className="sm:hidden">
-                  <button className="px-2" onClick={(i) => handelonSlide(i++)}>
-                    <FaGreaterThan />
-                  </button>
+                  /> */}
                 </div>
               </div>
               <div className="mt-6 sm:mt-0">

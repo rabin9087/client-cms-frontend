@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit"
 const initialState = {
     productList: [],
     product: {},
-    productsByCatId: []
+    productsByCatId: [],
+    carouselImage: [],
 }
 
 const productSlice = createSlice({
@@ -18,10 +19,13 @@ const productSlice = createSlice({
         },
         SetProductsByCatId: (state, { payload }) => {
             state.productsByCatId = payload
+        },
+        setCarouselImage: (state, { payload }) => {
+            state.carouselImage = payload
         }
     }
 })
 
 const { actions, reducer } = productSlice
-export const { setProductList, SetAProduct, SetProductsByCatId } = actions
+export const { setProductList, SetAProduct, SetProductsByCatId, setCarouselImage } = actions
 export default reducer

@@ -3,9 +3,8 @@ import { CustomeInput } from "../../components/CustomeInput";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { IoHomeSharp } from "react-icons/io5";
-import { GiCricketBat } from "react-icons/gi";
 import { GiRunningShoe } from "react-icons/gi";
-import { GiWinterGloves } from "react-icons/gi";
+import { AiOutlineFileProtect } from "react-icons/ai";
 import { GiClothes } from "react-icons/gi";
 import { HiTrendingUp } from "react-icons/hi";
 import { MdSportsCricket } from "react-icons/md";
@@ -39,7 +38,7 @@ const Header = ({ products, setProducts }) => {
 
   const navItems = [
     { navbar: "Bats", url: "/bats", Icon: IoHomeSharp },
-    // { navbar: "Protection", url: "/protection", Icon: GiCricketBat },
+    { navbar: "Protection", url: "/protection", Icon: AiOutlineFileProtect },
     { navbar: "Cloths", url: "/cloths", Icon: GiClothes },
     { navbar: "Shoes", url: "/shoes", Icon: GiRunningShoe },
     { navbar: "Balls", url: "/balls", Icon: IoHomeSharp },
@@ -48,7 +47,7 @@ const Header = ({ products, setProducts }) => {
 
   return (
     <>
-      <div className={"shadow-lg w-full relative"}>
+      <div className={"shadow-lg w-full fixed top-0 z-10"}>
         <div className="flex w-full gap-2 p-7 justify-between items-center bg-blue-400">
           {/* mobile menu */}
           <div className="xl:hidden">
