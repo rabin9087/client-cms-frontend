@@ -18,8 +18,6 @@ const YouMayLike = ({ slug }) => {
     dispatch(fetchAllProductForYouMayLikByslugAction(slug));
   }, [dispatch, slug]);
 
-  useEffect(() => {}, []);
-
   return (
     <div>
       <h1 className="text-center text-3xl mt-4">You May Also Like</h1>

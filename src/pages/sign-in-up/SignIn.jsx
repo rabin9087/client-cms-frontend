@@ -1,5 +1,5 @@
 import UserLayout from "../layout/UserLayout";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { signInUser } from "../../helper/userAxios/userAxios";
 import { useDispatch } from "react-redux";
@@ -10,9 +10,9 @@ import { fetchUserProfile } from "./userAction";
 const SignIn = () => {
   const emailRef = useRef("");
   const passwordRef = useRef("");
-const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const [loading, setLoading] = useState(false);
   const location = useLocation();
   const fromLocation = location.state?.from?.location?.pathname || "/signIn";
 
@@ -20,6 +20,7 @@ const dispatch = useDispatch()
     e.preventDefault();
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
+
     if (!email && !password) {
       return toast.error("Please enter both email and password");
     }
@@ -31,10 +32,11 @@ const dispatch = useDispatch()
     }
 
     const pending = signInUser({ email, password });
-
+    setLoading(true);
     toast.promise(pending, { processing: "Signing In into your account" });
 
     const { status, message, jwts } = await pending;
+    setLoading(false);
     toast[status](message);
     if (status === "success") {
       const { refreshJWT, accessJWT } = jwts;
@@ -99,11 +101,15 @@ const dispatch = useDispatch()
 
           <div className="flex w-60 m-auto  items-center justify-center">
             <button
-              className=" w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              className={
+                loading
+                  ? "spinnerCheckOut"
+                  : " w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              }
               type="button"
               onClick={handelOnSubmit}
             >
-              Sign In
+              {loading ? "" : "Sign In"}
             </button>
           </div>
           <div className="mt-3 text-end pe-2">

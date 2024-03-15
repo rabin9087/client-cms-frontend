@@ -82,8 +82,7 @@ const PaymentForm = ({ totalAmount, paymentBy }) => {
         );
         dispatch(SetAOrder(addToCartList));
         await UpdateProducts({ items: addToCartList });
-        // dispatch(DeleteAddToCartList(addToCartList.length));
-        setLoading(false);
+        dispatch(DeleteAddToCartList(addToCartList.length));
         return (
           navigate("/orders") && alert("Items has been ordered successfully")
         );
@@ -101,12 +100,13 @@ const PaymentForm = ({ totalAmount, paymentBy }) => {
         })
       );
       await UpdateProducts({ items: addToCartList });
-      // dispatch(DeleteAddToCartList(addToCartList.length));
-      setLoading(false);
+      dispatch(DeleteAddToCartList(addToCartList.length));
       return (
-        navigate("/orders") && alert("Items has been ordered successfully")
+        navigate("/orders") &&
+        toast.success("Items has been ordered successfully")
       );
     }
+    setLoading(false);
     return alert(
       "Unable to place your order, please try again or contact admininstartion"
     );
@@ -180,7 +180,7 @@ const PaymentForm = ({ totalAmount, paymentBy }) => {
               >
                 <button
                   type="submit"
-                  className={loading ? "spinnerCheckOut" : ""}
+                  className={loading ? "spinnerCheckOut" : "w-full"}
                 >
                   {loading ? "" : "check out "}
                 </button>

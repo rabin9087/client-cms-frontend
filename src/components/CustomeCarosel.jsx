@@ -5,8 +5,8 @@ import { useDispatch } from "react-redux";
 
 const CustomeCarosel = ({ carouselImage }) => {
   const dispatch = useDispatch();
-  const [current, setCurrent] = useState(0);
 
+  const [current, setCurrent] = useState(0);
   const previousSlide = () => {
     if (carouselImage.length === 1) {
       return;
