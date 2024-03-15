@@ -12,19 +12,20 @@ import { setAUser } from "../sign-in-up/userSlice";
 import { LogOutUser } from "../../helper/userAxios/userAxios";
 
 const Header = ({ products, setProducts }) => {
-  const [tempProduct, setTempProduct] = useState(products);
+  // const [tempProduct, setTempProduct] = useState(products);
   const [showMenu, setShowMenu] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const addToCartList = JSON.parse(localStorage.getItem("addToCartList"));
+  // const addToCartList = JSON.parse(localStorage.getItem("addToCartList"));
+  const { addToCartList } = useSelector((state) => state.addToCartInfo);
   const { user } = useSelector((state) => state.userInfo);
 
   const handelOnSearch = (e) => {
     const { value } = e.target;
 
     let matchProduct = [];
-    matchProduct = tempProduct.filter((item) =>
+    matchProduct = products.filter((item) =>
       item.name.toLowerCase().includes(value.toLowerCase())
     );
     setProducts(matchProduct);
@@ -43,6 +44,7 @@ const Header = ({ products, setProducts }) => {
     { navbar: "Shoes", url: "/shoes", Icon: GiRunningShoe },
     { navbar: "Balls", url: "/balls", Icon: IoHomeSharp },
     { navbar: "Trending", url: "/trending", Icon: HiTrendingUp },
+    { navbar: "Order & History", url: "/orders", Icon: HiTrendingUp },
   ];
 
   return (
@@ -79,16 +81,18 @@ const Header = ({ products, setProducts }) => {
           {/* categories */}
           <div className="hidden xl:flex gap-8 text-gray-800   justify-start">
             <span className="flex text-lg text-center gap-6">
-              {navItems.map(({ navbar, url }, i) => (
-                <Link
-                  key={i}
-                  to={url}
-                  className="hover:underline hover:text-gray-600"
-                >
-                  {" "}
-                  {navbar}{" "}
-                </Link>
-              ))}
+              {navItems
+                ?.slice(0, navItems.length - 1)
+                .map(({ navbar, url }, i) => (
+                  <Link
+                    key={i}
+                    to={url}
+                    className="hover:underline hover:text-gray-600"
+                  >
+                    {" "}
+                    {navbar}{" "}
+                  </Link>
+                ))}
             </span>
           </div>
           {/* search */}

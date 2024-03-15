@@ -31,6 +31,14 @@ export const fetchAllProductsByCatID = (_id) => {
     })
 }
 
+export const fetchAProductsById = (_id) => {
+    return axiosProcesserAPI({
+        method: 'get',
+        url: productAPI + "/product/" + _id,
+
+    })
+}
+
 export const UpdateProducts = (data) => {
     return axiosProcesserAPI({
         method: 'patch',

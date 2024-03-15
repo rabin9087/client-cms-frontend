@@ -1,4 +1,5 @@
 import { fetchAllProductsByCatID, fetchProducts, fetchProductsForYouMayLikebySlug, fetchProductsbySlug } from "../../helper/productAxios/productAxios"
+
 import { setYouMayLikeProductList } from "../youMayLike/youMayLikeSlice"
 import { SetAProduct, SetProductsByCatId, setCarouselImage, setComponentProductList, setProductList } from "./productSlice"
 
@@ -37,3 +38,4 @@ export const fetchProductsById = (_id) => async (dispatch) => {
         dispatch(SetProductsByCatId(products))
     }
 }
+

@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import UserLayout from "../pages/layout/UserLayout";
 import Rating from "./Rating";
 import { setAddToCartList } from "../pages/addToCart/addToCartSlice";
-import CustomeCarosel from "./CustomeCarosel";
 import YouMayLike from "../pages/youMayLike/YouMayLike";
 
 const ProductLanding = () => {

@@ -1,13 +1,19 @@
-import { postOrders } from "../../helper/orderAxios/orderAxios"
-import { SetAOrder } from "./orderSlice"
+import { fetchAllOrderByUserId, postOrders } from "../../helper/orderAxios/orderAxios"
+import { SetAOrder, SetOrderHistory } from "./orderSlice"
 
-export const postOrderProducts = (data) => async (dispatch) => {
-
-    const { status, orders } = await postOrders(data)
+export const postOrderProducts = (data) => async () => {
+    const { status } = await postOrders(data)
     if (status === "success") {
-        const { ...orderDetails } = orders
-        localStorage.setItem("orders", JSON.stringify(orderDetails))
-        //dispatch(SetAOrder(orders));
+        localStorage.setItem("orders", JSON.stringify(data))
+        dispatchEvent(SetAOrder(data));
+    }
+}
+
+export const fetchAllOrderByUSerIdAction = (_id) => async (dispatch) => {
+    const { status, orders } = await fetchAllOrderByUserId(_id)
+    console.log(orders)
+    if (status === "success") {
+        dispatch(SetOrderHistory(orders));
     }
 }
 

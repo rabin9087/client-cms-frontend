@@ -12,7 +12,7 @@ import { postOrderProducts } from "../order/orderAction";
 import { DeleteAddToCartList } from "../addToCart/addToCartSlice";
 import { toast } from "react-toastify";
 import { UpdateProducts } from "../../helper/productAxios/productAxios";
-import { SetAOrder } from "../order/orderSlice";
+
 const PaymentForm = ({ totalAmount, paymentBy }) => {
   const stripe = useStripe();
   const dispatch = useDispatch();
@@ -80,11 +80,13 @@ const PaymentForm = ({ totalAmount, paymentBy }) => {
             amount: totalAmount,
           })
         );
-        dispatch(SetAOrder(addToCartList));
+
         await UpdateProducts({ items: addToCartList });
         dispatch(DeleteAddToCartList(addToCartList.length));
+
         return (
-          navigate("/orders") && alert("Items has been ordered successfully")
+          navigate("/orders") &&
+          toast.success("Items has been ordered successfully")
         );
       }
     }

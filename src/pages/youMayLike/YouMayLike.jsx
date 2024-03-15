@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { fetchAllProductForYouMayLikByslugAction } from "../products/productAction";
 import { useDispatch, useSelector } from "react-redux";
 import Products from "../products/Products";

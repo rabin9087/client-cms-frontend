@@ -16,3 +16,11 @@ export const fetchAllProductsByCatID = (_id) => {
         data: _id
     })
 }
+
+export const fetchAllOrderByUserId = (_id) => {
+    return axiosProcesserAPI({
+        method: 'get',
+        url: orderAPI + "/userId/" + _id,
+
+    })
+}
