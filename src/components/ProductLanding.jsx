@@ -61,7 +61,7 @@ const ProductLanding = () => {
         <div className="block lg:flex gap-4">
           <div className="w-full lg:w-1/2 block lg:flex ">
             <div
-              className={`flex mb-2 lg:grid grid-rows-${carouselImage?.length} gap-4 justify-center items-center  lg:h-full rounded-md  lg:w-48 w-full  overflow-auto shadow-lg group-hover:opacity-75`}
+              className={`hidden mb-2 lg:grid grid-rows-${carouselImage?.length} gap-4 justify-center items-center  lg:h-full rounded-md  lg:w-48 w-full  overflow-auto shadow-lg group-hover:opacity-75`}
             >
               {carouselImage?.map((item, i) => (
                 <button key={i} onClick={() => setThumbnailImage(item)}>
@@ -86,9 +86,19 @@ const ProductLanding = () => {
                   className="productLangingImg p-2 object-center h-60 md:w-full md:h-full"
                 />
               </div>
-              {/* <div className="aspect-h-1 aspect-w-1  overflow-hidden ">
-                <CustomeCarosel carouselImage={carouselImage} />
-              </div> */}
+            </div>
+            <div
+              className={`flex lg:hidden mb-2 grid-rows-${carouselImage?.length} gap-4 justify-center items-center  lg:h-full rounded-md  lg:w-48 w-full  overflow-auto shadow-lg group-hover:opacity-75`}
+            >
+              {carouselImage?.map((item, i) => (
+                <button key={i} onClick={() => setThumbnailImage(item)}>
+                  <img
+                    src={item}
+                    alt={product.name}
+                    className="object-center  md:w-44 md:h-44 w-20 h-20 p-2 hover:opacity-75 bg-gray-200 rounded-md"
+                  />
+                </button>
+              ))}
             </div>
           </div>
           <div className="block mt-6 w-full lg:w-1/2 sm:mt-6 ">
@@ -109,7 +119,7 @@ const ProductLanding = () => {
                 Size
               </label>
               <select
-                className="w-2/3 md:w-1/4 py-2 px-2.5 rounded-md mt-2 font-medium md:text-xl text-sm"
+                className="w-2/3 md:w-1/2 xlg:w-1/4 py-2 px-2.5 rounded-md mt-2 font-medium md:text-xl text-sm"
                 value={size}
                 onChange={handelOnSize}
               >
@@ -126,7 +136,7 @@ const ProductLanding = () => {
               <div className="block mt-6 xl:text-xl text-sm">
                 <span className="block">QTY </span>
                 <div className="block 2xl:flex justify-center w-full items-center gap-4 ">
-                  <div className="flex text-center justify-between items-center mt-2 border-gray-100 border-2 box-content w-32 lg:w-72">
+                  <div className="flex text-center justify-between items-center mt-2 border-gray-100 border-2 box-content w-36 md:w-48 ">
                     <button
                       onClick={decrement}
                       type="button"

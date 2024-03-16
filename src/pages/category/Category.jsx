@@ -30,11 +30,11 @@ const Category = () => {
 
   const cat = [
     { category: "Bats", item: bats, url: "/bats" },
-    { category: "Gloves", item: gloves, url: "/gloves" },
-    { category: "Shoes", item: shoes, url: "/shoes" },
-    { category: "Pads", item: pads, url: "/pads" },
-    { category: "Cloths", item: cloth, url: "/cloths" },
-    { category: "Ball", item: ball, url: "/ball" },
+    { category: "Protections", item: gloves, url: "/protection" },
+    { category: "Cloths", item: shoes, url: "/cloths" },
+    { category: "Shoes", item: pads, url: "/shoes" },
+
+    { category: "Balls", item: ball, url: "/balls" },
   ];
 
   const [loading, setLoading] = useState(true);
@@ -68,7 +68,7 @@ const Category = () => {
                 key={category}
               >
                 <div>
-                  <h2 className="text-2xl font-bold tracking-tight text-gray-900">
+                  <h2 className="text-2xl font-bold tracking-tight text-gray-900 hover:underline">
                     <Link to={url}>{category}</Link>
                   </h2>
                   {loading && (
