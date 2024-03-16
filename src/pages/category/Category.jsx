@@ -75,7 +75,7 @@ const Category = () => {
                     <div className="spinner justify-center items-center m-auto"></div>
                   )}
 
-                  <div className="mt-6 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-4 xl:gap-x-8 ">
+                  <div className="mt-6 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-4 xl:gap-x-8 overflow-auto">
                     {item
                       ?.slice(0, 4)
                       .map(({ _id, name, price, thumbnail, slug }) => (
