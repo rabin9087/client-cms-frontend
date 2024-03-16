@@ -1,17 +1,16 @@
 import { useEffect } from "react";
 import { getAllCategoriesAction } from "../category/categoryAction";
 import { fetchAllProducts } from "../products/productAction";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const Footer = () => {
   const dispatch = useDispatch();
-  const { categoryList } = useSelector((state) => state.categoryInfo);
 
   useEffect(() => {
     dispatch(getAllCategoriesAction());
     dispatch(fetchAllProducts());
   }, [dispatch]);
-  
+
   return (
     <div className="md:flex justify-around items-start w-full p-7 shadow-lg footer gap-4">
       <div className="block justify-start w-full  items-start mt-6 ">
@@ -223,30 +222,28 @@ const Footer = () => {
               <a href="/shoes">Shoes</a>
             </div>
             <div className="py-2">
-              <a href="/gloves">Gloves</a>
+              <a href="/protection">Protections</a>
             </div>
           </div>
           <div className="catelouge-item block justify-center">
             <div className="py-2">
-              <a href="/pads">Pads</a>
+              <a href="/balls">Balls</a>
             </div>
-            <div className="py-2">
-              <a href="#">Womens</a>
-            </div>
+
             <div className="py-2">
               <a href="/cloths">Cloths</a>
             </div>
+            <div className="py-2">
+              <a href="/">Sports</a>
+            </div>
           </div>
           <div className="catelouge-item block justify-center">
-            <div className="py-2">
+            {/* <div className="py-2">
               <a href="#">Trending</a>
             </div>
             <div className="py-2">
               <a href="#">Tech</a>
-            </div>
-            <div className="py-2">
-              <a href="#">Sports</a>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

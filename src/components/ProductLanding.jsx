@@ -20,6 +20,11 @@ const ProductLanding = () => {
 
   const [size, SetSize] = useState("");
   const [count, setCount] = useState(1);
+
+  const handelOnThumbnailChange = (item) => {
+    setThumbnailImage(item);
+  };
+
   const decrement = () => {
     if (count > 1) {
       setCount((prev) => prev - 1);
@@ -52,7 +57,7 @@ const ProductLanding = () => {
 
   useEffect(() => {
     dispatch(fetchAProduct(slug));
-    // setCats(addToCartList);
+    window.scrollTo(0, 0);
   }, [slug, dispatch, addToCartList]);
 
   return (
@@ -64,11 +69,11 @@ const ProductLanding = () => {
               className={`hidden mb-2 lg:grid grid-rows-${carouselImage?.length} gap-4 justify-center items-center  lg:h-full rounded-md  lg:w-48 w-full  overflow-auto shadow-lg group-hover:opacity-75`}
             >
               {carouselImage?.map((item, i) => (
-                <button key={i} onClick={() => setThumbnailImage(item)}>
+                <button key={i} onClick={() => handelOnThumbnailChange(item)}>
                   <img
                     src={item}
                     alt={product.name}
-                    className="object-center  md:w-44 md:h-44 w-20 h-20 p-2 hover:opacity-75 bg-gray-200 rounded-md"
+                    className={` object-center  md:w-44 md:h-44 w-20 h-20 p-2 hover:opacity-75 bg-gray-200 rounded-md`}
                   />
                 </button>
               ))}
@@ -83,7 +88,9 @@ const ProductLanding = () => {
                       : product.thumbnail
                   }
                   alt={product.slug}
-                  className="productLangingImg p-2 object-center h-60 md:w-full md:h-full"
+                  className={
+                    "productLangingImg p-2 object-center h-60 md:w-full md:h-full"
+                  }
                 />
               </div>
             </div>
@@ -102,12 +109,12 @@ const ProductLanding = () => {
             </div>
           </div>
           <div className="block mt-6 w-full lg:w-1/2 sm:mt-6 ">
-            <div>
-              <h3 className="text-xl text-gray-700 font-bold px-6">
+            <div className="w-full">
+              <h3 className="text-3xl text-gray-700 font-mono  px-6">
                 {product.name}
               </h3>
             </div>
-            <p className="text-2xl mt-2 text-gray-700 font-bold px-6">
+            <p className="text-3xl mt-2 text-red-500 font-serif px-6">
               $ {product.price}.00
             </p>
             <div className="px-4 my-2">
@@ -173,8 +180,8 @@ const ProductLanding = () => {
           </div>
         </div>
 
-        <div className="block w-full shadow-lg pb-8">
-          <span className="block py-2 text-xl font-medium">
+        <div className="block w-full shadow-lg pb-8 mx-4 lg:text-center">
+          <span className="block py-2 text-2xl font-sans underline">
             Product Details{" "}
           </span>
 

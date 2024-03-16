@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const OrderItems = () => {
   const orders = JSON.parse(localStorage.getItem("orders"));
   const { address, items } = orders;
@@ -53,19 +55,21 @@ const OrderItems = () => {
           </thead>
           <tbody className="">
             {items?.map(
-              ({ _id, thumbnail, name, orderQty, price, size }, i) => (
+              ({ _id, thumbnail, name, orderQty, price, size, slug }, i) => (
                 <tr
                   key={_id}
                   className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:opacity-95"
                 >
                   <td className="px-6 py-4">{i + 1}.</td>
                   <td className="px-6 py-4">
-                    <img
-                      width={"80px"}
-                      height={"100px"}
-                      src={thumbnail}
-                      className="thumbnail p-2 object-center"
-                    />
+                    <Link to={`/product/${slug}`}>
+                      <img
+                        width={"80px"}
+                        height={"100px"}
+                        src={thumbnail}
+                        className="thumbnail p-2 object-center"
+                      />
+                    </Link>
                   </td>
                   <td className="px-6 py-4">Order sent</td>
                   <td className="px-6 py-4">
