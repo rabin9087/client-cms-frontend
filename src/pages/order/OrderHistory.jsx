@@ -5,29 +5,16 @@ import { fetchAllOrderByUSerIdAction } from "./orderAction";
 const OrderHistory = ({ userId }) => {
   const dispatch = useDispatch();
   const { orderHistories } = useSelector((state) => state.orderInfo);
-  console.log(orderHistories);
   useEffect(() => {
     dispatch(fetchAllOrderByUSerIdAction(userId));
   }, [dispatch, userId]);
+  
   return (
     <div className="m-5 mt-4 ">
       <h3 className="text-center py-4 text-lg font-bold underline">
         Your order History
       </h3>
-      {/* <div className="p-2 border-2 w-fit">
-        <h3 className="text-lg font-bold text-center">Address Details </h3>
-        <span>Name: {address?.name}</span> <br />
-        <span>Email: {address?.email}</span> <br />
-        <span>Phone: {address?.phone}</span>
-        <br />
-        <div>
-          Address:{" "}
-          {address?.address?.line2 ? address?.address?.line2 + "/" : ""}
-          {address?.address?.line1}, {address?.address?.city},{" "}
-          {address?.address?.state} {address?.address?.postal_code},{" "}
-          {address?.address?.country}
-        </div>
-      </div> */}
+      
       <div className="relative overflow-x-auto mt-4">
         <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -52,13 +39,14 @@ const OrderHistory = ({ userId }) => {
                 Order_Date
               </th>
               <th scope="col" className="px-6 py-3">
-                Order Details
+                Order Status
               </th>
             </tr>
           </thead>
           <tbody className="">
-            {orderHistories?.map(
-              ({ _id, address, items, pay, amount, createdAt }, i) => (
+           
+            {[...orderHistories]?.reverse().map(
+              ({ _id, address, items, pay, amount, createdAt, deliveryStatus }, i) => (
                 <tr
                   key={_id}
                   className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:opacity-95"
@@ -104,7 +92,7 @@ const OrderHistory = ({ userId }) => {
                       day: "numeric",
                     })}
                   </td>
-                  <td className="px-6 py-4">{"+"}</td>
+                  <td className="px-6 py-4">{ deliveryStatus}</td>
                 </tr>
               )
             )}

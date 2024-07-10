@@ -131,7 +131,7 @@ const ProductLanding = () => {
                 onChange={handelOnSize}
               >
                 <option className="py-2" value="">
-                  Select an option
+                  Select a Size
                 </option>
 
                 {product.sizes?.map((item, i) => (
